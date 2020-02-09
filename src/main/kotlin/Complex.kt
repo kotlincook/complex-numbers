@@ -4,16 +4,17 @@ import java.lang.NumberFormatException
 import java.util.*
 import kotlin.math.*
 
-const val π = PI
-
-val i = Complex(0.0, 1.0)
-
 val Double.i: Complex
     get() = Complex(0.0, this)
 
 data class Polar(val mod: Double, val arg: Double) {
     fun toComplex() = Complex(mod * cos(arg), mod * sin(arg))
 }
+
+const val π = PI
+val i = Complex(0.0, 1.0)
+val zero = Complex(0.0, 0.0)
+val one = Complex(1.0, 0.0)
 
 data class Complex(val re: Double, val im: Double = 0.0) {
     constructor(z: Complex) : this(z.re, z.im)

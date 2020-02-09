@@ -44,4 +44,11 @@ class ComplexTest {
         assertTrue(mod(!z*z - r*r) < eps)
     }
 
+    @Test
+    fun testConstants() {
+        val z = "2.0+3.0i".toComplex()
+        assertEquals(z * zero, zero)
+        assertEquals(z * one, z)
+    }
+
 }
