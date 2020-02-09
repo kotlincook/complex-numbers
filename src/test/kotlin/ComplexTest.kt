@@ -22,12 +22,6 @@ class ComplexTest {
 
 
     @Test
-    fun testToPolarToComplex() {
-        val z = (2.0 + 3.0.I) as ComplexImpl
-        assertEquals(z, z.toPolar().toComplex())
-    }
-
-    @Test
     fun testPolar() {
         assertTrue((I - exp((PI / 2).I)).mod < eps)
     }

@@ -46,6 +46,11 @@ interface IComplex {
 val Double.I: IComplex
     get() = Complex(0.0, this)
 
+// Raises a serious error in der IDEA
+//var plus: Double.(IComplex) -> IComplex = { c->
+//    Complex(this + c.re, c.im)
+//}
+
 operator fun Double.plus(c: IComplex): IComplex {
     return Complex(this + c.re, c.im)
 }
@@ -63,10 +68,10 @@ operator fun Double.div(c: IComplex): IComplex {
     return Complex((this * c.re) / d, (-this * c.im) / d)
 }
 
-fun String.toComplex(): IComplex {
+var toComplex: String.() -> IComplex = {
     val parts = StringTokenizer(this, "+-", true)
-            .toList().map { it.toString() }
-    return when (parts.size) {
+            .toList().map { it.toString().toLowerCase() }
+    when (parts.size) {
         0 -> throw NumberFormatException("empty String")
         1 -> if (parts[0].endsWith("i")) {
             Complex(0.0, parts[0].removeSuffix("i").toDouble())
@@ -97,7 +102,6 @@ var cos: (IComplex) -> IComplex = { z ->
     Complex(cos(z.re) * cosh(z.im), -sin(z.re) * sinh(z.im))
 }
 
-
 var Complex: (re:Double, im: Double) -> IComplex = { re:Double, im:Double -> ComplexImpl(re, im) }
 val I = Complex(0.0, 1.0)
 val ZERO = Complex(0.0, 0.0)
@@ -106,6 +110,7 @@ val ONE = Complex(1.0, 0.0)
 data class Polar(val mod: Double, val arg: Double) {
     fun toComplex() = Complex(mod * cos(arg), mod * sin(arg))
 }
+
 data class ComplexImpl(override val re: Double, override val im: Double = 0.0): IComplex {
     constructor(z: IComplex) : this(z.re, z.im)
     constructor(polarCoord: Polar) : this(polarCoord.toComplex())
@@ -113,10 +118,4 @@ data class ComplexImpl(override val re: Double, override val im: Double = 0.0): 
 
     fun toPolar(): Polar = Polar(mod, arg)
     override fun toString(): String = asString()
-}
-
-
-
-fun main(args: Array<String>) {
-    println(exp(PI*I))
 }
