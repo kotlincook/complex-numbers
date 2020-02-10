@@ -17,7 +17,7 @@ class ComplexTest {
         "2.0;2.0;0.0", "-2.0;-2.0;0.0", "2.0i;0.0;2.0", "-2.0i;0.0;-2.0"
     ], delimiter = ';')
     fun testParsing(input: String, expRe: Double, expIm: Double) {
-        assertEquals(input.toComplex(), Complex(expRe, expIm))
+        assertEquals(input.toComplex(), complexOf(expRe, expIm))
     }
 
 
