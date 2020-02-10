@@ -1,7 +1,5 @@
 package org.kotlincook.math
 
-import kotlin.math.PI
-
 class ApacheComplex(val value: org.apache.commons.math3.complex.Complex): Complex {
     override val re: Double = value.real
     override val im: Double = value.imaginary

@@ -33,7 +33,7 @@ class ComplexTest {
 
     @Test
     fun testEulerEquation() {
-        val z = "2.0+3.0i".toComplex()
+        val z = "2.0+3.0I".toComplex()
         assertTrue((cos(z) + I * sin(z) - exp(I * z)).mod < eps)
     }
 

@@ -22,6 +22,7 @@ interface Complex {
         get() {
             return sqrt(re * re + im * im)
         }
+
     operator fun not(): Complex = conj()
     operator fun plus(z: Complex): Complex = complexOf(re + z.re, im + z.im)
     operator fun minus(z: Complex): Complex = complexOf(re - z.re, im - z.im)
@@ -33,14 +34,21 @@ interface Complex {
         val d = c.re * c.re + c.im * c.im
         return complexOf((re * c.re + im * c.im) / d, (im * c.re - re * c.im) / d)
     }
+
     operator fun div(c: Double): Complex = complexOf(re / c, im / c)
     fun conj() = complexOf(re, -im)
-    fun asString(): String = this.re.toString() + (
-            when {
-                this.im > 0.0 -> "+" + this.im + "i"
-                this.im < 0.0 -> "" + this.im + "i"
-                else -> ""
-            })
+
+    fun asString(format: String = ""): String {
+        val reFormattet = if (format.isEmpty()) re.toString() else String.format(format, re)
+        val imFormattet = if (format.isEmpty()) im.toString() else String.format(format, im)
+
+        return reFormattet +
+                when {
+                    this.im > 0.0 -> "+" + imFormattet + "i"
+                    this.im < 0.0 -> "" + imFormattet + "i"
+                    else -> ""
+                }
+    }
 }
 
 val Double.I: Complex
@@ -102,7 +110,7 @@ var cos: (Complex) -> Complex = { z ->
     complexOf(cos(z.re) * cosh(z.im), -sin(z.re) * sinh(z.im))
 }
 
-var complexOf: (re:Double, im: Double) -> Complex = { re:Double, im:Double -> DefaultComplex(re, im) }
+var complexOf: (re: Double, im: Double) -> Complex = { re: Double, im: Double -> DefaultComplex(re, im) }
 val I = complexOf(0.0, 1.0)
 val ZERO = complexOf(0.0, 0.0)
 val ONE = complexOf(1.0, 0.0)
@@ -111,7 +119,7 @@ data class Polar(val mod: Double, val arg: Double) {
     fun toComplex() = complexOf(mod * cos(arg), mod * sin(arg))
 }
 
-data class DefaultComplex(override val re: Double, override val im: Double = 0.0): Complex {
+data class DefaultComplex(override val re: Double, override val im: Double = 0.0) : Complex {
     constructor(z: Complex) : this(z.re, z.im)
     constructor(polarCoord: Polar) : this(polarCoord.toComplex())
     constructor(str: String) : this(str.toComplex())
