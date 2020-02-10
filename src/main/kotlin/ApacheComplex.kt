@@ -1,11 +1,20 @@
 package org.kotlincook.math
 
-import org.apache.commons.math3.complex.Complex
 import kotlin.math.PI
 
-class ApacheComplex(z: Complex): org.kotlincook.math.Complex {
-    override val re: Double = z.real
-    override val im: Double = z.imaginary
+class ApacheComplex(val value: org.apache.commons.math3.complex.Complex): Complex {
+    override val re: Double = value.real
+    override val im: Double = value.imaginary
+
+    companion object {
+        fun activate() {
+            complexOf = { re:Double, im:Double -> ApacheComplex(org.apache.commons.math3.complex.Complex(re, im)) }
+            exp = { z -> ApacheComplex((z as ApacheComplex).value.exp()) }
+        }
+    }
+
+    override operator fun times(z: Complex) =
+            ApacheComplex(value.multiply((z as ApacheComplex).value))
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -22,11 +31,4 @@ class ApacheComplex(z: Complex): org.kotlincook.math.Complex {
         return result
     }
     override fun toString(): String = asString()
-}
-
-
-fun main(args: Array<String>) {
-    complexOf = { re:Double, im:Double -> ApacheComplex(Complex(re, im)) }
-    println((2.0 + 3.0.I) * (5.0 + 7.0.I))
-    println(exp(PI *I))
 }

@@ -8,7 +8,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ComplexTest {
-
     val eps = 1E-10
 
     @ParameterizedTest()
@@ -18,6 +17,12 @@ class ComplexTest {
     ], delimiter = ';')
     fun testParsing(input: String, expRe: Double, expIm: Double) {
         assertEquals(input.toComplex(), complexOf(expRe, expIm))
+    }
+
+    @Test
+    fun testIBuilder() {
+        assertEquals(2.0 + 3.0.I, complexOf(2.0, 3.0))
+        assertEquals(2.0 + 3.0 * I, complexOf(2.0, 3.0))
     }
 
 
@@ -36,7 +41,7 @@ class ComplexTest {
     fun testMod() {
         val z = "2.0+3.0i".toComplex()
         val r = z.mod
-        assertTrue((!z*z - r*r).mod < eps)
+        assertTrue((!z * z - r * r).mod < eps)
     }
 
     @Test
