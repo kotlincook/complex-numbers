@@ -15,7 +15,7 @@ import javax.swing.JLabel
 fun mand(z0: Complex, max: Int): Int {
     var z = z0
     repeat(max) {
-        if (z.mod > 1000.0) return it
+        if (z.mod > 2.0) return it
         z = z * z + z0
     }
     return max
