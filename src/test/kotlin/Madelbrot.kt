@@ -15,7 +15,7 @@ import javax.swing.JLabel
 fun mand(z0: Complex, max: Int): Int {
     var z = z0
     repeat(max) {
-        if (z.mod > 2.0) return it
+        if (z.mod > 1000.0) return it
         z = z * z + z0
     }
     return max
@@ -35,7 +35,7 @@ fun main() {
             val y0 = yc - size / 2 + size * j / n
             val z0 = complexOf(x0, y0)
             val gray = max - mand(z0, max)
-            val color = Color(gray/2, gray*gray%256, gray)
+            val color = Color(gray/2, gray*gray%256, gray*gray*gray%256)
             bufferedImage.setRGB(i, j, color.rgb)
         }
     }
