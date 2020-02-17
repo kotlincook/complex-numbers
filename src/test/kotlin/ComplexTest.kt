@@ -10,10 +10,13 @@ import kotlin.test.assertTrue
 class ComplexTest {
     val eps = 1E-10
 
+
+
     @ParameterizedTest()
     @CsvSource(value =
-    ["2.0+3.0i;2.0;3.0", "-2.0+3.0i;-2.0;3.0", "2.0-3.0i;2.0;-3.0", "-2.0-3.0i;-2.0;-3.0",
-        "2.0;2.0;0.0", "-2.0;-2.0;0.0", "2.0i;0.0;2.0", "-2.0i;0.0;-2.0"
+    ["i;0.0;1.0", "-i;0.0;-1.0", "1.0+i;1.0;1.0", "1.0-i;1.0;-1.0", "-2.0+i;-2.0;1.0", "-2.0-i;-2.0;-1.0",
+        "2.0+3.0i;2.0;3.0", "-2.0+3.0i;-2.0;3.0", "2.0-3.0i;2.0;-3.0", "-2.0-3.0i;-2.0;-3.0", "2.0;2.0;0.0",
+        "-2.0;-2.0;0.0", "2.0i;0.0;2.0", "-2.0i;0.0;-2.0"
     ], delimiter = ';')
     fun testParsing(input: String, expRe: Double, expIm: Double) {
         assertEquals(input.toComplex(), complexOf(expRe, expIm))
@@ -261,6 +264,22 @@ class ComplexTest {
         for (t in testData) {
             assertEquals(t.third,t.first / t.second, "${t.first} / ${t.second}")
         }
+    }
+
+    @Test
+    fun testToString() {
+        assertEquals("0.0", complexOf(0.0, 0.0).toString())
+        assertEquals("0.0", complexOf(-0.0, -0.0).toString())
+        assertEquals("1.0", complexOf(1.0, 0.0).toString())
+        assertEquals("-1.0", complexOf(-1.0, 0.0).toString())
+        assertEquals("i", complexOf(0.0, 1.0).toString())
+        assertEquals("-i", complexOf(0.0, -1.0).toString())
+        assertEquals("1.0+i", complexOf(1.0, 1.0).toString())
+        assertEquals("1.0-i", complexOf(1.0, -1.0).toString())
+        assertEquals("3.0+2.0i", complexOf(3.0, 2.0).toString())
+        assertEquals("3.0-2.0i", complexOf(3.0, -2.0).toString())
+        assertEquals("-3.0+2.0i", complexOf(-3.0, 2.0).toString())
+        assertEquals("-3.0-2.0i", complexOf(-3.0, -2.0).toString())
     }
 
 }

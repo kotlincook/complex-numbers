@@ -51,7 +51,7 @@ interface Complex {
             isNaN() || x.isNaN() -> NaN
             isInfinite() -> if (x.isInfinite()) NaN else INF
             x.isInfinite() -> if (isInfinite()) NaN else INF
-            else -> complexOf(re + x, im )
+            else -> complexOf(re + x, im)
         }
     }
 
@@ -69,7 +69,7 @@ interface Complex {
             isNaN() || x.isNaN() -> NaN
             isInfinite() -> if (x.isInfinite()) NaN else INF
             x.isInfinite() -> if (isInfinite()) NaN else INF
-            else -> complexOf(re - x, im )
+            else -> complexOf(re - x, im)
         }
     }
 
@@ -93,9 +93,9 @@ interface Complex {
 
     operator fun div(z: Complex): Complex {
         return when {
-            isNaN() || z.isNaN()-> NaN
+            isNaN() || z.isNaN() -> NaN
             isInfinite() -> if (z.isInfinite()) NaN else INF
-            z.isInfinite() ->  ZERO
+            z.isInfinite() -> ZERO
             z.isZero() -> if (isZero()) NaN else INF
             else -> {
                 val d = z.re * z.re + z.im * z.im
@@ -103,14 +103,15 @@ interface Complex {
             }
         }
     }
+
     operator fun div(d: Double): Complex {
-       return when {
-           isNaN() || d.isNaN()-> NaN
-           isInfinite() -> if (d.isInfinite()) NaN else INF
-           d.isInfinite() -> ZERO
-           d == 0.0 -> if (isZero()) NaN else INF
-           else -> complexOf(re / d, im / d)
-       }
+        return when {
+            isNaN() || d.isNaN() -> NaN
+            isInfinite() -> if (d.isInfinite()) NaN else INF
+            d.isInfinite() -> ZERO
+            d == 0.0 -> if (isZero()) NaN else INF
+            else -> complexOf(re / d, im / d)
+        }
     }
 
     operator fun unaryMinus(): Complex {
@@ -132,15 +133,27 @@ interface Complex {
     }
 
     fun asString(format: String = ""): String {
-        val reFormattet = if (format.isEmpty()) re.toString() else String.format(format, re)
-        val imFormattet = if (format.isEmpty()) im.toString() else String.format(format, im)
-
-        return reFormattet +
-                when {
-                    this.im > 0.0 -> "+" + imFormattet + "i"
-                    this.im < 0.0 -> "" + imFormattet + "i"
-                    else -> ""
+        return when (this) {
+            NaN -> "NaN"
+            INF -> "Infinity"
+            else -> {
+                val reFormattet = if (format.isEmpty()) re.toString() else String.format(format, re)
+                val imFormattet = when (im) {
+                    1.0 -> "i"
+                    -1.0 -> "-i"
+                    else -> "${if (format.isEmpty()) im.toString() else String.format(format, im)}i"
                 }
+                if (re == 0.0) {
+                    if (im == 0.0) "0.0" else imFormattet
+                } else {
+                    when {
+                        im > 0.0 -> "$reFormattet+$imFormattet"
+                        im < 0.0 -> "$reFormattet$imFormattet"
+                        else -> reFormattet
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -153,26 +166,38 @@ operator fun Double.minus(z: Complex) = -z + this
 
 operator fun Double.times(z: Complex) = z * this
 
-operator fun Double.div(z: Complex) = ONE / z  * this
+operator fun Double.div(z: Complex) = ONE / z * this
 
 var toComplex: String.() -> Complex = {
-    val parts = StringTokenizer(this, "+-", true)
-            .toList().map { it.toString().toLowerCase() }
-    when (parts.size) {
-        0 -> throw NumberFormatException("empty String")
-        1 -> if (parts[0].endsWith("i")) {
-            complexOf(0.0, parts[0].removeSuffix("i").toDouble())
-        } else {
-            complexOf(parts[0].toDouble(), 0.0)
+
+    fun parseIm(arg: String): String {
+        val im = arg.removeSuffix("i")
+        return if (im.isEmpty()) "1.0" else im
+    }
+
+    when (this) {
+        "Infinity" -> INF
+        "NaN" -> NaN
+        else -> {
+            val parts = StringTokenizer(this, "+-", true)
+                    .toList().map { it.toString().toLowerCase() }
+            when (parts.size) {
+                0 -> throw NumberFormatException("empty String")
+                1 -> if (parts[0].endsWith("i")) {
+                    complexOf(0.0, parseIm(parts[0]).toDouble())
+                } else {
+                    complexOf(parts[0].toDouble(), 0.0)
+                }
+                2 -> if (parts[1].endsWith("i")) {
+                    complexOf(0.0, (parts[0] + parseIm(parts[1])).toDouble())
+                } else {
+                    complexOf((parts[0] + parts[1]).toDouble(), 0.0)
+                }
+                3 -> complexOf(parts[0].toDouble(), (parts[1] + parseIm(parts[2])).toDouble())
+                4 -> complexOf((parts[0] + parts[1]).toDouble(), (parts[2] + parseIm(parts[3])).toDouble())
+                else -> throw NumberFormatException("For input string: \"$this\"")
+            }
         }
-        2 -> if (parts[1].endsWith("i")) {
-            complexOf(0.0, (parts[0] + parts[1].removeSuffix("i")).toDouble())
-        } else {
-            complexOf((parts[0] + parts[1]).toDouble(), 0.0)
-        }
-        3 -> complexOf(parts[0].toDouble(), (parts[1] + parts[2].removeSuffix("i")).toDouble())
-        4 -> complexOf((parts[0] + parts[1]).toDouble(), (parts[2] + parts[3].removeSuffix("i")).toDouble())
-        else -> throw NumberFormatException("For input string: \"$this\"")
     }
 }
 
@@ -189,7 +214,7 @@ var cos: (Complex) -> Complex = { z ->
     complexOf(cos(z.re) * cosh(z.im), -sin(z.re) * sinh(z.im))
 }
 
-var complexOf: (re: Double, im: Double) -> Complex = { re: Double, im: Double -> DefaultComplex(re, im) }
+var complexOf: (re: Double, im: Double) -> Complex = { re, im -> DefaultComplex(re, im) }
 val I = complexOf(0.0, 1.0)
 val ZERO = complexOf(0.0, 0.0)
 val ONE = complexOf(1.0, 0.0)
@@ -206,16 +231,14 @@ data class DefaultComplex(override val re: Double, override val im: Double = 0.0
     constructor(str: String) : this(str.toComplex())
 
     fun toPolar(): Polar = Polar(mod, arg)
+    // had to be overwritten because of a bug comparing data classes with -0.0 as Double value
     override fun toString(): String = asString()
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-
         other as DefaultComplex
-
         if (re != other.re) return false
         if (im != other.im) return false
-
         return true
     }
 

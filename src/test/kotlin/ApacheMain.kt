@@ -8,7 +8,7 @@ fun main(args: Array<String>) {
     println(complexOf(-0.0, -0.0).equals(complexOf(0.0, 0.0)))
     println(-0.0 == 0.0)
     println(-0.0 - 0.0)
-    println(1/Double.NEGATIVE_INFINITY)
+    println(complexOf(2.0, -2.0))
 
 //    ApacheComplex.activate()
 //    println(((2.0 + 3.0 * I) * (5.0 + 7.0.I)).asString("%.2f"))
