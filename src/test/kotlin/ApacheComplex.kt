@@ -6,7 +6,8 @@ class ApacheComplex(val value: org.apache.commons.math3.complex.Complex): Comple
 
     companion object {
         fun activate() {
-            complexOf = { re:Double, im:Double -> ApacheComplex(org.apache.commons.math3.complex.Complex(re, im)) }
+            complexOf = { re:Number, im:Number ->
+                ApacheComplex(org.apache.commons.math3.complex.Complex(re.toDouble(), im.toDouble())) }
             exp = { z -> ApacheComplex((z as ApacheComplex).value.exp()) }
         }
     }

@@ -1,5 +1,6 @@
 package org.kotlincook.math
 
+import java.util.*
 import kotlin.math.PI
 
 fun main(args: Array<String>) {
@@ -9,6 +10,10 @@ fun main(args: Array<String>) {
     println(-0.0 == 0.0)
     println(-0.0 - 0.0)
     println(complexOf(2.0, -2.0))
+    println(exp(PI / 2 * I).asString(locale = Locale.US))
+    println(cos(ZERO))
+    println(sin(PI / 2 * ONE))
+    println(2*ONE/2.I)
 
 //    ApacheComplex.activate()
 //    println(((2.0 + 3.0 * I) * (5.0 + 7.0.I)).asString("%.2f"))

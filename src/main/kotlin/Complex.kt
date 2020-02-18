@@ -1,5 +1,7 @@
 package org.kotlincook.math
 
+import java.math.BigDecimal
+import java.math.BigInteger
 import java.util.*
 import kotlin.math.*
 
@@ -54,6 +56,11 @@ interface Complex {
             else -> complexOf(re + x, im)
         }
     }
+    operator fun plus(f: Float) = plus(f.toDouble())
+    operator fun plus(i: Int) = plus(i.toDouble())
+    operator fun plus(l: Long) = plus(l.toDouble())
+    operator fun plus(bd: BigDecimal) = plus(bd.toDouble())
+    operator fun plus(bi: BigInteger) = plus(bi.toDouble())
 
     operator fun minus(z: Complex): Complex {
         return when {
@@ -72,6 +79,11 @@ interface Complex {
             else -> complexOf(re - x, im)
         }
     }
+    operator fun minus(f: Float) = minus(f.toDouble())
+    operator fun minus(i: Int) = minus(i.toDouble())
+    operator fun minus(l: Long) = minus(l.toDouble())
+    operator fun minus(bd: BigDecimal) = minus(bd.toDouble())
+    operator fun minus(bi: BigInteger) = minus(bi.toDouble())
 
     operator fun times(z: Complex): Complex {
         return when {
@@ -90,6 +102,11 @@ interface Complex {
             else -> complexOf(re * d, im * d)
         }
     }
+    operator fun times(f: Float) = times(f.toDouble())
+    operator fun times(i: Int) = times(i.toDouble())
+    operator fun times(l: Long) = times(l.toDouble())
+    operator fun times(bd: BigDecimal) = times(bd.toDouble())
+    operator fun times(bi: BigInteger) = times(bi.toDouble())
 
     operator fun div(z: Complex): Complex {
         return when {
@@ -113,6 +130,11 @@ interface Complex {
             else -> complexOf(re / d, im / d)
         }
     }
+    operator fun div(f: Float) = div(f.toDouble())
+    operator fun div(i: Int) = div(i.toDouble())
+    operator fun div(l: Long) = div(l.toDouble())
+    operator fun div(bd: BigDecimal) = div(bd.toDouble())
+    operator fun div(bi: BigInteger) = div(bi.toDouble())
 
     operator fun unaryMinus(): Complex {
         return when {
@@ -132,16 +154,16 @@ interface Complex {
         }
     }
 
-    fun asString(format: String = ""): String {
+    fun asString(format: String = "", locale: Locale = Locale.getDefault()): String {
         return when (this) {
             NaN -> "NaN"
             INF -> "Infinity"
             else -> {
-                val reFormattet = if (format.isEmpty()) re.toString() else String.format(format, re)
+                val reFormattet = if (format.isEmpty()) re.toString() else String.format(locale, format, re)
                 val imFormattet = when (im) {
                     1.0 -> "i"
                     -1.0 -> "-i"
-                    else -> "${if (format.isEmpty()) im.toString() else String.format(format, im)}i"
+                    else -> "${if (format.isEmpty()) im.toString() else String.format(locale, format, im)}i"
                 }
                 if (re == 0.0) {
                     if (im == 0.0) "0.0" else imFormattet
@@ -159,14 +181,45 @@ interface Complex {
 
 val Double.I: Complex
     get() = complexOf(0.0, this)
+val Float.I: Complex
+    get() = toDouble().I
+val Int.I: Complex
+    get() = toDouble().I
+val Long.I: Complex
+    get() = toDouble().I
+val BigInteger.I: Complex
+    get() = toDouble().I
+val BigDecimal.I: Complex
+    get() = toDouble().I
 
 operator fun Double.plus(z: Complex) = z + this
+operator fun Float.plus(z: Complex) = toDouble().plus(z)
+operator fun Long.plus(z: Complex) = toDouble().plus(z)
+operator fun Int.plus(z: Complex) = z + toDouble().plus(z)
+operator fun BigDecimal.plus(z: Complex) = toDouble().plus(z)
+operator fun BigInteger.plus(z: Complex) = toDouble().plus(z)
 
 operator fun Double.minus(z: Complex) = -z + this
+operator fun Float.minus(z: Complex) = toDouble().minus(z)
+operator fun Long.minus(z: Complex) = toDouble().minus(z)
+operator fun Int.minus(z: Complex) = toDouble().minus(z)
+operator fun BigDecimal.minus(z: Complex) = toDouble().minus(z)
+operator fun BigInteger.minus(z: Complex) = toDouble().minus(z)
 
 operator fun Double.times(z: Complex) = z * this
+operator fun Float.times(z: Complex) = toDouble().times(z)
+operator fun Long.times(z: Complex) = toDouble().times(z)
+operator fun Int.times(z: Complex) = toDouble().times(z)
+operator fun BigDecimal.times(z: Complex) = toDouble().times(z)
+operator fun BigInteger.times(z: Complex) = toDouble().times(z)
 
 operator fun Double.div(z: Complex) = ONE / z * this
+operator fun Float.div(z: Complex) = toDouble().div(z)
+operator fun Long.div(z: Complex) = toDouble().div(z)
+operator fun Int.div(z: Complex) = toDouble().div(z)
+operator fun BigDecimal.div(z: Complex) = toDouble().div(z)
+operator fun BigInteger.div(z: Complex) = toDouble().div(z)
+
 
 var toComplex: String.() -> Complex = {
 
@@ -202,24 +255,57 @@ var toComplex: String.() -> Complex = {
 }
 
 var exp: (Complex) -> Complex = { z ->
-    val r: Double = exp(z.re)
-    complexOf(r * cos(z.im), r * sin(z.im))
+    when (z) {
+        NaN, INF -> NaN
+        else -> {
+            val r: Double = exp(z.re)
+            complexOf(r * cos(z.im), r * sin(z.im))
+        }
+    }
 }
+fun exp(z: Float) = exp(z.toDouble())
+fun exp(z: Int) = exp(z.toDouble())
+fun exp(z: Long) = exp(z.toDouble())
+fun exp(z: BigDecimal) = exp(z.toDouble())
+fun exp(z: BigInteger) = exp(z.toDouble())
 
 var sin: (Complex) -> Complex = { z ->
-    complexOf(sin(z.re) * cosh(z.im), cos(z.re) * sinh(z.im))
+    when (z) {
+        NaN, INF -> NaN
+        else -> {
+            val r: Double = exp(z.re)
+            complexOf(sin(z.re) * cosh(z.im), cos(z.re) * sinh(z.im))
+        }
+    }
 }
+fun sin(z: Float) = sin(z.toDouble())
+fun sin(z: Int) = sin(z.toDouble())
+fun sin(z: Long) = sin(z.toDouble())
+fun sin(z: BigDecimal) = sin(z.toDouble())
+fun sin(z: BigInteger) = sin(z.toDouble())
 
 var cos: (Complex) -> Complex = { z ->
-    complexOf(cos(z.re) * cosh(z.im), -sin(z.re) * sinh(z.im))
+    when (z) {
+        NaN, INF -> NaN
+        else -> {
+            val r: Double = exp(z.re)
+            complexOf(cos(z.re) * cosh(z.im), -sin(z.re) * sinh(z.im))
+        }
+    }
 }
+fun cos(z: Float) = cos(z.toDouble())
+fun cos(z: Int) = cos(z.toDouble())
+fun cos(z: Long) = cos(z.toDouble())
+fun cos(z: BigDecimal) = cos(z.toDouble())
+fun cos(z: BigInteger) = cos(z.toDouble())
 
-var complexOf: (re: Double, im: Double) -> Complex = { re, im -> DefaultComplex(re, im) }
+var complexOf: (re: Number, im: Number) -> Complex = { re, im -> DefaultComplex(re.toDouble(), im.toDouble()) }
 val I = complexOf(0.0, 1.0)
 val ZERO = complexOf(0.0, 0.0)
 val ONE = complexOf(1.0, 0.0)
 val NaN = complexOf(Double.NaN, Double.NaN)
 val INF = complexOf(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
+
 
 data class Polar(val mod: Double, val arg: Double) {
     fun toComplex() = complexOf(mod * cos(arg), mod * sin(arg))
