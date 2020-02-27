@@ -1,7 +1,5 @@
 package org.kotlincook.math
 
-import java.math.BigDecimal
-import java.math.BigInteger
 import java.util.*
 import kotlin.math.*
 
@@ -32,13 +30,32 @@ interface Complex {
     /** The modulus (absolute value) of this complex number (radius of the polar coordinate representation)  */
     val mod: Double
         get() {
-            return sqrt(re * re + im * im)
+            return kotlin.math.sqrt(re * re + im * im)
         }
 
+    /**
+     *  checks infinity property (remark that in case of complex numbers there is only one unsigned infinity)
+     *  @return true if this is infinite
+     */
     fun isInfinite() = this === INF
+
+    /**
+     * checks the "not a number" property (NaN represents an essential singularity)
+     * @return true if this is NaN
+     */
     fun isNaN() = this === NaN
+
+    /**
+     * checks to zero
+     *  @return true if this is zero
+     */
     fun isZero() = this == ZERO
 
+    /**
+     * Plus operator adding two complex numbers
+     * @param z the summand
+     * @return sum of this and z
+     */
     operator fun plus(z: Complex): Complex {
         return when {
             isNaN() || z.isNaN() -> NaN
@@ -48,6 +65,11 @@ interface Complex {
         }
     }
 
+    /**
+     * Plus operator adding a complex number and a number of type Double
+     * @param x the summand
+     * @return sum of this and x
+     */
     operator fun plus(x: Double): Complex {
         return when {
             isNaN() || x.isNaN() -> NaN
@@ -57,8 +79,18 @@ interface Complex {
         }
     }
 
+    /**
+     * Plus operator adding a complex number and one of type Number except Double
+     * @param x the summand
+     * @return sum of this and x
+     */
     operator fun plus(x: Number) = plus(x.toDouble())
 
+    /**
+     * Minus operator subtracting two complex numbers
+     * @param z the minuend
+     * @return difference of this and x
+     */
     operator fun minus(z: Complex): Complex {
         return when {
             isNaN() || z.isNaN() -> NaN
@@ -68,6 +100,11 @@ interface Complex {
         }
     }
 
+    /**
+     * Minus operator subtracting a complex number and one of type Double
+     * @param x the minuend
+     * @return difference of this and x
+     */
     operator fun minus(x: Double): Complex {
         return when {
             isNaN() || x.isNaN() -> NaN
@@ -76,8 +113,19 @@ interface Complex {
             else -> complexOf(re - x, im)
         }
     }
+
+    /**
+     * Minus operator subtracting a complex number and one of type Number except Double
+     * @param x the minuend
+     * @return difference of this and x
+     */
     operator fun minus(x: Number) = minus(x.toDouble())
 
+    /**
+     * Times operator multiplying two complex numbers
+     * @param z the multiplicant
+     * @return product of this and z
+     */
     operator fun times(z: Complex): Complex {
         return when {
             isNaN() || z.isNaN() -> NaN
@@ -87,16 +135,32 @@ interface Complex {
         }
     }
 
-    operator fun times(d: Double): Complex {
+    /**
+     * Times operator multiplying a complex number and one of type Double
+     * @param x the multiplicant
+     * @return product of this and x
+     */
+    operator fun times(x: Double): Complex {
         return when {
-            isNaN() || d.isNaN() -> NaN
-            isInfinite() -> if (d == 0.0) NaN else INF
-            d.isInfinite() -> if (isZero()) NaN else INF
-            else -> complexOf(re * d, im * d)
+            isNaN() || x.isNaN() -> NaN
+            isInfinite() -> if (x == 0.0) NaN else INF
+            x.isInfinite() -> if (isZero()) NaN else INF
+            else -> complexOf(re * x, im * x)
         }
     }
+
+    /**
+     * Times operator multiplying a complex number and one of type Number except Double
+     * @param x the multiplicant
+     * @return the product of this and x
+     */
     operator fun times(x: Number) = times(x.toDouble())
 
+    /**
+     * Divide operator dividing two complex numbers
+     * @param z the denominator
+     * @return product of this and z
+     */
     operator fun div(z: Complex): Complex {
         return when {
             isNaN() || z.isNaN() -> NaN
@@ -110,17 +174,32 @@ interface Complex {
         }
     }
 
-    operator fun div(d: Double): Complex {
+    /**
+     * Divide operator dividing a complex number and one of type Double
+     * @param z the divisor
+     * @return division of this and z
+     */
+    operator fun div(x: Double): Complex {
         return when {
-            isNaN() || d.isNaN() -> NaN
-            isInfinite() -> if (d.isInfinite()) NaN else INF
-            d.isInfinite() -> ZERO
-            d == 0.0 -> if (isZero()) NaN else INF
-            else -> complexOf(re / d, im / d)
+            isNaN() || x.isNaN() -> NaN
+            isInfinite() -> if (x.isInfinite()) NaN else INF
+            x.isInfinite() -> ZERO
+            x == 0.0 -> if (isZero()) NaN else INF
+            else -> complexOf(re / x, im / x)
         }
     }
+
+    /**
+     * Divide operator dividing a complex number and one of type Number except Double
+     * @param x the divisor
+     * @return division of this and z
+     */
     operator fun div(x: Number) = div(x.toDouble())
 
+    /**
+     * Negates a complex number
+     * @return negation of this
+     */
     operator fun unaryMinus(): Complex {
         return when {
             isNaN() -> NaN
@@ -129,8 +208,16 @@ interface Complex {
         }
     }
 
+    /**
+     * Calculates the complex conjugation
+     * @return complex conjugation of this
+     */
     operator fun not(): Complex = conj()
 
+    /**
+     * Calculates the complex conjugation
+     * @return complex conjugation of this
+     */
     fun conj(): Complex {
         return when {
             isNaN() -> NaN
@@ -139,6 +226,11 @@ interface Complex {
         }
     }
 
+    /**
+     * A string representation of a complex number (this) in the Form "2.5+3.1i" for example.
+     * @param format This parameter affects the real an the imaginary part equally.
+     * @param locale The locale determines e.g. whether a dot or a comma is output.
+     */
     fun asString(format: String = "", locale: Locale = Locale.getDefault()): String {
         return when (this) {
             NaN -> "NaN"
@@ -164,15 +256,45 @@ interface Complex {
     }
 }
 
+/**
+ * Makes a number "imaginary". The result is the same as if the number (this) is multiplied by I.
+ * @return this * I
+ */
 val Number.I: Complex
-    get() = complexOf(0.0, toDouble())
+    get() = complexOf(0, toDouble())
 
+/**
+ * Plus operator adding a number of type Number and a complex one
+ * @param z the summand
+ * @return sum of this and z
+ */
 operator fun Number.plus(z: Complex) = z + this
+
+/**
+ * Minus operator sutracting a number of type Number and a complex one
+ * @param z the minuend
+ * @return diffenence of this and z
+ */
 operator fun Number.minus(z: Complex) = -z + this
+
+/**
+ * Times operator multiplying a number of type Number and a complex one
+ * @param z the multiplicant
+ * @return product of this and z
+ */
 operator fun Number.times(z: Complex) = z * this
+
+/**
+ * Division operator dividing a number of type Number and a complex one
+ * @param z the divisor
+ * @return division of this and z
+ */
 operator fun Number.div(z: Complex) = ONE / z * this
 
-
+/**
+ * Creates a complex number from a string. A valid representation is e.g. "2.5+3.1i"
+ * @return the created complex number
+ */
 var toComplex: String.() -> Complex = {
 
     fun parseIm(arg: String): String {
@@ -206,59 +328,40 @@ var toComplex: String.() -> Complex = {
     }
 }
 
-var exp: (Complex) -> Complex = { z ->
-    when (z) {
-        NaN, INF -> NaN
-        else -> {
-            val r: Double = exp(z.re)
-            complexOf(r * cos(z.im), r * sin(z.im))
-        }
-    }
-}
-fun exp(z: Number) = Math.exp(z.toDouble())
-
-var sin: (Complex) -> Complex = { z ->
-    when (z) {
-        NaN, INF -> NaN
-        else -> {
-            val r: Double = exp(z.re)
-            complexOf(sin(z.re) * cosh(z.im), cos(z.re) * sinh(z.im))
-        }
-    }
-}
-fun sin(z: Number) = Math.sin(z.toDouble())
-
-var cos: (Complex) -> Complex = { z ->
-    when (z) {
-        NaN, INF -> NaN
-        else -> {
-            val r: Double = exp(z.re)
-            complexOf(cos(z.re) * cosh(z.im), -sin(z.re) * sinh(z.im))
-        }
-    }
-}
-fun cos(z: Number) = Math.cos(z.toDouble())
-
+/**
+ * Creates a complex number from the real and the imaginary part
+ * @param re the real part
+ * @param im the imaginary part
+ * @return the created complex number
+ */
 var complexOf: (re: Number, im: Number) -> Complex = { re, im -> DefaultComplex(re.toDouble(), im.toDouble()) }
-val I = complexOf(0.0, 1.0)
-val ZERO = complexOf(0.0, 0.0)
-val ONE = complexOf(1.0, 0.0)
+
+/** The imaginary unit i as constant */
+val I = complexOf(0, 1)
+
+/** Number 0 as complex constant */
+val ZERO = complexOf(0, 0)
+
+/** The real unit 1 as constant */
+val ONE = complexOf(1, 0)
+
+/** "Not a number" represents a essential singularity */
 val NaN = complexOf(Double.NaN, Double.NaN)
+
+/** Infinity represents the north pole of the complex sphere. */
 val INF = complexOf(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
 
 
-data class Polar(val mod: Double, val arg: Double) {
-    fun toComplex() = complexOf(mod * cos(arg), mod * sin(arg))
-}
-
 data class DefaultComplex(override val re: Double, override val im: Double = 0.0) : Complex {
     constructor(z: Complex) : this(z.re, z.im)
-    constructor(polarCoord: Polar) : this(polarCoord.toComplex())
     constructor(str: String) : this(str.toComplex())
 
-    fun toPolar(): Polar = Polar(mod, arg)
-    // had to be overwritten because of a bug comparing data classes with -0.0 as Double value
+    // the following three standard functions had to be overwritten because of a bug comparing
+    // data classes with -0.0 as Double value. Without these overwrites would be
+    // DefaultComplex(0.0, 0.0) != DefaultComplex(-0.0, 0.0) although 0.0 == -0.0:
+
     override fun toString(): String = asString()
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
