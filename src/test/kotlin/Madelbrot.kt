@@ -11,7 +11,10 @@ import kotlin.system.measureTimeMillis
 
 
 /**
- * number of iterations to check if z0 is in Mandelbrot set
+ * Calculates the number of iterations from which the modulus of the iterated
+ * value is greater than 2 or <code>max</code> if this is not the case after
+ * <code>max</code> iterations
+ * @return number of iterations
  */
 fun mand(z0: Complex, max: Int): Int {
     var z = z0

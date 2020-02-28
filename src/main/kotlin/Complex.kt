@@ -329,7 +329,13 @@ var toComplex: String.() -> Complex = {
 }
 
 /**
- * Creates a complex number from the real and the imaginary part
+ * Creates a complex number from real and imaginary part.
+ * Here instances of class <code>DefaultComplex</code> are created which implements 
+ * the interface <code>Complex</code> is used by
+ * the factory function <code>toComplex</code>. If you would like to use your own
+ * implementation of <code>Complex</code> you can do this by replacing <code>toComplex</code>
+ * with a factory which is creating your custom class. So, the entire application code can
+ * remain the same.
  * @param re the real part
  * @param im the imaginary part
  * @return the created complex number
@@ -352,6 +358,13 @@ val NaN = complexOf(Double.NaN, Double.NaN)
 val INF = complexOf(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
 
 
+/**
+ * A default implemetation of the interface <code>Complex</code>. This class is used by
+ * the factory function <code>toComplex</code>. If you would like to use your own
+ * implementation of <code>Complex</code> you can do this by replacing <code>toComplex</code>
+ * with a factory which is creating your custom class. So, the entire application code can
+ * remain the same.
+ */
 data class DefaultComplex(override val re: Double, override val im: Double = 0.0) : Complex {
     constructor(z: Complex) : this(z.re, z.im)
     constructor(str: String) : this(str.toComplex())

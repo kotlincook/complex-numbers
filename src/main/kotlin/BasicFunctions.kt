@@ -1,7 +1,6 @@
 package org.kotlincook.math
 
 import kotlin.math.*
-import kotlin.system.measureTimeMillis
 
 /**
  * Exponential function

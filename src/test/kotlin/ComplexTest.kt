@@ -10,8 +10,6 @@ import kotlin.test.assertTrue
 class ComplexTest {
     val eps = 1E-10
 
-
-
     @ParameterizedTest()
     @CsvSource(value =
     ["i;0.0;1.0", "-i;0.0;-1.0", "1.0+i;1.0;1.0", "1.0-i;1.0;-1.0", "-2.0+i;-2.0;1.0", "-2.0-i;-2.0;-1.0",
