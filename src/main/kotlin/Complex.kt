@@ -264,6 +264,13 @@ val Number.I: Complex
     get() = complexOf(0, toDouble())
 
 /**
+ * Creates a complex number with this as real part and no imaginary part
+ * @return this as complex number
+ */
+val Number.R: Complex
+    get() = complexOf(toDouble(), 0)
+
+/**
  * Plus operator adding a number of type Number and a complex one
  * @param z the summand
  * @return sum of this and z
@@ -359,7 +366,7 @@ val INF = complexOf(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
 
 
 /**
- * A default implemetation of the interface <code>Complex</code>. This class is used by
+ * A default implementation of the interface <code>Complex</code>. This class is used by
  * the factory function <code>toComplex</code>. If you would like to use your own
  * implementation of <code>Complex</code> you can do this by replacing <code>toComplex</code>
  * with a factory which is creating your custom class. So, the entire application code can
@@ -369,22 +376,31 @@ data class DefaultComplex(override val re: Double, override val im: Double = 0.0
     constructor(z: Complex) : this(z.re, z.im)
     constructor(str: String) : this(str.toComplex())
 
+//    open operator fun equals(other: Any?): Boolean {
+//        return false
+//    }
+
     // the following three standard functions had to be overwritten because of a bug comparing
     // data classes with -0.0 as Double value. Without these overwrites would be
     // DefaultComplex(0.0, 0.0) != DefaultComplex(-0.0, 0.0) although 0.0 == -0.0:
 
-    override fun toString(): String = asString()
+    open override fun toString(): String = asString()
 
-    override fun equals(other: Any?): Boolean {
+    open override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-        other as DefaultComplex
-        if (re != other.re) return false
-        if (im != other.im) return false
-        return true
+        if (other === null) return false
+        if (other is Complex) {
+            if (re != other.re) return false
+            if (im != other.im) return false
+            return true
+        }
+        if (other is Number) {
+            return im == 0.0 && re == other.toDouble()
+        }
+        return false
     }
 
-    override fun hashCode(): Int {
+    open override fun hashCode(): Int {
         var result = re.hashCode()
         result = 31 * result + im.hashCode()
         return result
