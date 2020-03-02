@@ -10,6 +10,7 @@ fun main(args: Array<String>) {
     val u = I * z + exp(I * PI/2) + sqrt(-9)
     val w1 = 1.5F / z * 2 - 4.32 + 10L + (3.toBigDecimal() * I)
     val thisIsTrue = 1 / ZERO == INF && ONE / 0 == INF && (1 / INF) == ZERO
+    val w2 = I * z + exp(I * PI/2) + sqrt(-9)
 
     println(3.0 + NaN)
     println(complexOf(1.2, 3.4) == complexOf(1.2, 3.4))

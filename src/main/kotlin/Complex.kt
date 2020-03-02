@@ -314,7 +314,7 @@ var toComplex: String.() -> Complex = {
         "NaN" -> NaN
         else -> {
             val parts = StringTokenizer(this, "+-", true)
-                    .toList().map { it.toString().toLowerCase() }
+                    .toList().map { it.toString().replace('I', 'i') }
             when (parts.size) {
                 0 -> throw NumberFormatException("empty String")
                 1 -> if (parts[0].endsWith("i")) {
@@ -375,10 +375,6 @@ val INF = complexOf(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
 data class DefaultComplex(override val re: Double, override val im: Double = 0.0) : Complex {
     constructor(z: Complex) : this(z.re, z.im)
     constructor(str: String) : this(str.toComplex())
-
-//    open operator fun equals(other: Any?): Boolean {
-//        return false
-//    }
 
     // the following three standard functions had to be overwritten because of a bug comparing
     // data classes with -0.0 as Double value. Without these overwrites would be
