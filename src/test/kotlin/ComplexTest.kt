@@ -1,4 +1,4 @@
-package org.kotlincook.math
+package org.kotlinmath
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

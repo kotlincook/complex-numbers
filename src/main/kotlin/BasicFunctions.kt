@@ -1,4 +1,4 @@
-package org.kotlincook.math
+package org.kotlinmath
 
 import kotlin.math.*
 
