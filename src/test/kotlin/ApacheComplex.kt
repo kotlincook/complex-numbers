@@ -8,7 +8,7 @@ data class ApacheComplex(val value: org.apache.commons.math3.complex.Complex) : 
 
     companion object {
         fun activate() {
-            complexOf = { re: Number, im: Number ->
+            complex = { re: Number, im: Number ->
                 ApacheComplex(org.apache.commons.math3.complex.Complex(re.toDouble(), im.toDouble()))
             }
             // overwrite exp in order to usse the implementation of Apache for the exponential function:
@@ -23,6 +23,10 @@ data class ApacheComplex(val value: org.apache.commons.math3.complex.Complex) : 
      */
     override operator fun times(z: Complex) =
             ApacheComplex(value.multiply((z as ApacheComplex).value))
+
+    override operator fun plus(z: Complex) =
+            ApacheComplex(value.add((z as ApacheComplex).value))
+
 }
 
 
@@ -31,7 +35,6 @@ fun main(args: Array<String>) {
     ApacheComplex.activate()
     println(((2.0 + 3.0 * I) * (5.0 + 7.0.I)).asString("%.2f"))
     println(exp(PI * I).asString("%.2f"))
-    println(1.0 - (1.0 / 0.0))
     println(ONE / ZERO)
     val z = 3.0 + 4.0.I
 }

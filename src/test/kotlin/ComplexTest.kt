@@ -13,13 +13,13 @@ const val EPS = 1E-13
 
 class ComplexTest {
 
-    fun assertEquals(expected: Number, actual: Number, precision: Double, message: String? = null) =
+    private fun assertEquals(expected: Number, actual: Number, precision: Double, message: String? = null) =
             assertTrue(Math.abs(expected.toDouble() - actual.toDouble()) < precision,
-                    if (message == null) "Expected <$expected>, actual <$actual>" else message)
+                    message ?: "Expected <$expected>, actual <$actual>")
 
-    fun assertEquals(expected: Complex, actual: Complex, precision: Double, message: String? = null) =
+    private fun assertEquals(expected: Complex, actual: Complex, precision: Double, message: String? = null) =
             assertTrue((expected - actual).mod < precision,
-                    if (message == null) "Expected <$expected>, actual <$actual>" else message)
+                    message ?: "Expected <$expected>, actual <$actual>")
 
 
     @ParameterizedTest()
@@ -31,7 +31,7 @@ class ComplexTest {
         "0;0.0;0.0", "-0;0.0;0.0", "1;1.0;0.0", "-1;-1.0;0.0", "0-i;0.0;-1.0", "0+i;0.0;1.0"
     ], delimiter = ';')
     fun testToComplex(input: String, expRe: Double, expIm: Double) {
-        assertEquals(input.toComplex(), complexOf(expRe, expIm))
+        assertEquals(input.toComplex(), complex(expRe, expIm))
     }
 
     @Test
@@ -48,8 +48,8 @@ class ComplexTest {
 
     @Test
     fun testIBuilder() {
-        assertEquals(2.0 + 3.0.I, complexOf(2.0, 3.0))
-        assertEquals(2.0 + 3.0 * I, complexOf(2.0, 3.0))
+        assertEquals(2.0 + 3.0.I, complex(2.0, 3.0))
+        assertEquals(2.0 + 3.0 * I, complex(2.0, 3.0))
     }
 
 
@@ -123,10 +123,10 @@ class ComplexTest {
     fun testDoubleAddAndSub() {
         val z0 = 2.0+3.0.I
         val d0 = 3.0
-        assertEquals(complexOf(d0, 0.0),ZERO + d0)
-        assertEquals(complexOf(-d0, 0.0),ZERO - d0)
-        assertEquals(complexOf(5.0, 3.0),z0 + d0)
-        assertEquals(complexOf(-1.0, 3.0),z0 - d0)
+        assertEquals(complex(d0, 0.0),ZERO + d0)
+        assertEquals(complex(-d0, 0.0),ZERO - d0)
+        assertEquals(complex(5.0, 3.0),z0 + d0)
+        assertEquals(complex(-1.0, 3.0),z0 - d0)
 
         val testData = listOf(
                 Triple(INF, d0, INF),
@@ -184,7 +184,7 @@ class ComplexTest {
     fun testDoubleMultiplication() {
         val z0 = 3.0+3.0.I
         val d0 = 3.0
-        val w0 = complexOf(9.0, 9.0)
+        val w0 = complex(9.0, 9.0)
         val testData = listOf(
                 Triple(z0, d0, w0),
                 Triple(ZERO, d0, ZERO),
@@ -243,7 +243,7 @@ class ComplexTest {
     fun testDoubleDivision() {
         val z0 = 3.0+3.0.I
         val d0 = 3.0
-        val w0 = complexOf(1.0, 1.0)
+        val w0 = complex(1.0, 1.0)
         val testData = listOf(
                 Triple(z0, d0, w0),
                 Triple(ZERO, d0, ZERO),
@@ -275,7 +275,7 @@ class ComplexTest {
     fun testDoubleDivisionReverse() {
         val z0 = 3.0+3.0.I
         val d0 = 3.0
-        val w0 = complexOf(0.5, -0.5)
+        val w0 = complex(0.5, -0.5)
         val testData = listOf(
                 Triple(d0, z0, w0),
                 Triple(d0, ZERO, INF),
@@ -305,8 +305,8 @@ class ComplexTest {
 
     @Test
     fun testConjugate() {
-        val input = complexOf(3.0, 4.0)
-        val expected = complexOf(3.0, -4.0)
+        val input = complex(3.0, 4.0)
+        val expected = complex(3.0, -4.0)
         assertEquals(expected, input.conj())
         assertEquals(expected, !input)
         assertEquals(25.0, (input * !input).mod)
@@ -314,18 +314,18 @@ class ComplexTest {
 
     @Test
     fun testToString() {
-        assertEquals("0.0", complexOf(0.0, 0.0).toString())
-        assertEquals("0.0", complexOf(-0.0, -0.0).toString())
-        assertEquals("1.0", complexOf(1.0, 0.0).toString())
-        assertEquals("-1.0", complexOf(-1.0, 0.0).toString())
-        assertEquals("i", complexOf(0.0, 1.0).toString())
-        assertEquals("-i", complexOf(0.0, -1.0).toString())
-        assertEquals("1.0+i", complexOf(1.0, 1.0).toString())
-        assertEquals("1.0-i", complexOf(1.0, -1.0).toString())
-        assertEquals("3.0+2.0i", complexOf(3.0, 2.0).toString())
-        assertEquals("3.0-2.0i", complexOf(3.0, -2.0).toString())
-        assertEquals("-3.0+2.0i", complexOf(-3.0, 2.0).toString())
-        assertEquals("-3.0-2.0i", complexOf(-3.0, -2.0).toString())
+        assertEquals("0.0", complex(0.0, 0.0).toString())
+        assertEquals("0.0", complex(-0.0, -0.0).toString())
+        assertEquals("1.0", complex(1.0, 0.0).toString())
+        assertEquals("-1.0", complex(-1.0, 0.0).toString())
+        assertEquals("i", complex(0.0, 1.0).toString())
+        assertEquals("-i", complex(0.0, -1.0).toString())
+        assertEquals("1.0+i", complex(1.0, 1.0).toString())
+        assertEquals("1.0-i", complex(1.0, -1.0).toString())
+        assertEquals("3.0+2.0i", complex(3.0, 2.0).toString())
+        assertEquals("3.0-2.0i", complex(3.0, -2.0).toString())
+        assertEquals("-3.0+2.0i", complex(-3.0, 2.0).toString())
+        assertEquals("-3.0-2.0i", complex(-3.0, -2.0).toString())
     }
 
 }

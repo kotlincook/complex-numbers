@@ -61,7 +61,7 @@ interface Complex {
             isNaN() || z.isNaN() -> NaN
             isInfinite() -> if (z.isInfinite()) NaN else INF
             z.isInfinite() -> if (isInfinite()) NaN else INF
-            else -> complexOf(re + z.re, im + z.im)
+            else -> complex(re + z.re, im + z.im)
         }
     }
 
@@ -75,7 +75,7 @@ interface Complex {
             isNaN() || x.isNaN() -> NaN
             isInfinite() -> if (x.isInfinite()) NaN else INF
             x.isInfinite() -> if (isInfinite()) NaN else INF
-            else -> complexOf(re + x, im)
+            else -> complex(re + x, im)
         }
     }
 
@@ -96,7 +96,7 @@ interface Complex {
             isNaN() || z.isNaN() -> NaN
             isInfinite() -> if (z.isInfinite()) NaN else INF
             z.isInfinite() -> if (isInfinite()) NaN else INF
-            else -> complexOf(re - z.re, im - z.im)
+            else -> complex(re - z.re, im - z.im)
         }
     }
 
@@ -110,7 +110,7 @@ interface Complex {
             isNaN() || x.isNaN() -> NaN
             isInfinite() -> if (x.isInfinite()) NaN else INF
             x.isInfinite() -> if (isInfinite()) NaN else INF
-            else -> complexOf(re - x, im)
+            else -> complex(re - x, im)
         }
     }
 
@@ -131,7 +131,7 @@ interface Complex {
             isNaN() || z.isNaN() -> NaN
             isInfinite() -> if (z.isZero()) NaN else INF
             z.isInfinite() -> if (isZero()) NaN else INF
-            else -> complexOf(re * z.re - im * z.im, im * z.re + re * z.im)
+            else -> complex(re * z.re - im * z.im, im * z.re + re * z.im)
         }
     }
 
@@ -145,7 +145,7 @@ interface Complex {
             isNaN() || x.isNaN() -> NaN
             isInfinite() -> if (x == 0.0) NaN else INF
             x.isInfinite() -> if (isZero()) NaN else INF
-            else -> complexOf(re * x, im * x)
+            else -> complex(re * x, im * x)
         }
     }
 
@@ -169,7 +169,7 @@ interface Complex {
             z.isZero() -> if (isZero()) NaN else INF
             else -> {
                 val d = z.re * z.re + z.im * z.im
-                complexOf((re * z.re + im * z.im) / d, (im * z.re - re * z.im) / d)
+                complex((re * z.re + im * z.im) / d, (im * z.re - re * z.im) / d)
             }
         }
     }
@@ -185,7 +185,7 @@ interface Complex {
             isInfinite() -> if (x.isInfinite()) NaN else INF
             x.isInfinite() -> ZERO
             x == 0.0 -> if (isZero()) NaN else INF
-            else -> complexOf(re / x, im / x)
+            else -> complex(re / x, im / x)
         }
     }
 
@@ -204,7 +204,7 @@ interface Complex {
         return when {
             isNaN() -> NaN
             isInfinite() -> INF
-            else -> complexOf(-re, -im)
+            else -> complex(-re, -im)
         }
     }
 
@@ -222,7 +222,7 @@ interface Complex {
         return when {
             isNaN() -> NaN
             isInfinite() -> INF
-            else -> complexOf(re, -im)
+            else -> complex(re, -im)
         }
     }
 
@@ -261,14 +261,14 @@ interface Complex {
  * @return this * I
  */
 val Number.I: Complex
-    get() = complexOf(0, toDouble())
+    get() = complex(0, toDouble())
 
 /**
  * Creates a complex number with this as real part and no imaginary part
  * @return this as complex number
  */
 val Number.R: Complex
-    get() = complexOf(toDouble(), 0)
+    get() = complex(toDouble(), 0)
 
 /**
  * Plus operator adding a number of type Number and a complex one
@@ -318,17 +318,17 @@ var toComplex: String.() -> Complex = {
             when (parts.size) {
                 0 -> throw NumberFormatException("empty String")
                 1 -> if (parts[0].endsWith("i")) {
-                    complexOf(0.0, parseIm(parts[0]).toDouble())
+                    complex(0.0, parseIm(parts[0]).toDouble())
                 } else {
-                    complexOf(parts[0].toDouble(), 0.0)
+                    complex(parts[0].toDouble(), 0.0)
                 }
                 2 -> if (parts[1].endsWith("i")) {
-                    complexOf(0.0, (parts[0] + parseIm(parts[1])).toDouble())
+                    complex(0.0, (parts[0] + parseIm(parts[1])).toDouble())
                 } else {
-                    complexOf((parts[0] + parts[1]).toDouble(), 0.0)
+                    complex((parts[0] + parts[1]).toDouble(), 0.0)
                 }
-                3 -> complexOf(parts[0].toDouble(), (parts[1] + parseIm(parts[2])).toDouble())
-                4 -> complexOf((parts[0] + parts[1]).toDouble(), (parts[2] + parseIm(parts[3])).toDouble())
+                3 -> complex(parts[0].toDouble(), (parts[1] + parseIm(parts[2])).toDouble())
+                4 -> complex((parts[0] + parts[1]).toDouble(), (parts[2] + parseIm(parts[3])).toDouble())
                 else -> throw NumberFormatException("For input string: \"$this\"")
             }
         }
@@ -347,22 +347,22 @@ var toComplex: String.() -> Complex = {
  * @param im the imaginary part
  * @return the created complex number
  */
-var complexOf: (re: Number, im: Number) -> Complex = { re, im -> DefaultComplex(re.toDouble(), im.toDouble()) }
+var complex: (re: Number, im: Number) -> Complex = { re, im -> DefaultComplex(re.toDouble(), im.toDouble()) }
 
 /** The imaginary unit i as constant */
-val I = complexOf(0, 1)
+val I = complex(0, 1)
 
 /** Number 0 as complex constant */
-val ZERO = complexOf(0, 0)
+val ZERO = complex(0, 0)
 
 /** The real unit 1 as constant */
-val ONE = complexOf(1, 0)
+val ONE = complex(1, 0)
 
 /** "Not a number" represents a essential singularity */
-val NaN = complexOf(Double.NaN, Double.NaN)
+val NaN = complex(Double.NaN, Double.NaN)
 
 /** Infinity represents the north pole of the complex sphere. */
-val INF = complexOf(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
+val INF = complex(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
 
 
 /**
