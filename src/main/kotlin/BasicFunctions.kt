@@ -37,7 +37,6 @@ var sin : (Complex) -> Complex = { z ->
     when (z) {
         NaN, INF -> NaN
         else -> {
-            val r: Double = Math.exp(z.re)
             complex(
                     kotlin.math.sin(z.re) * kotlin.math.cosh(z.im),
                     kotlin.math.cos(z.re) * kotlin.math.sinh(z.im))
@@ -54,7 +53,6 @@ var cos : (Complex) -> Complex = { z ->
     when (z) {
         NaN, INF -> NaN
         else -> {
-            val r: Double = Math.exp(z.re)
             complex(
                     kotlin.math.cos(z.re) * kotlin.math.cosh(z.im),
                     -kotlin.math.sin(z.re) * kotlin.math.sinh(z.im))

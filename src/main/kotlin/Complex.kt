@@ -176,7 +176,7 @@ interface Complex {
 
     /**
      * Divide operator dividing a complex number and one of type Double
-     * @param z the divisor
+     * @param x the divisor
      * @return division of this and z
      */
     operator fun div(x: Double): Complex {
