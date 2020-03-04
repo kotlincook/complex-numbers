@@ -4,7 +4,13 @@ import java.util.*
 import kotlin.math.*
 
 /**
- * Representation of a Complex number
+ * This interface represents a Complex number. Essentially, a complex number is
+ * a tupel of two Double values, the real (re) and the imaginary (im) part.
+ * Additionally, there are two further calculated properties arg and mod, which
+ * are the values of the corresponding polar coordinate representation.
+ * The main purpose of this interface/class is that you can combine complex numbers
+ * using the four basic arithmetic operations (+, -, *, /) with each other but also
+ * with all other objects of the type Number.
  */
 interface Complex {
 
@@ -367,22 +373,23 @@ val INF = complex(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
 
 /**
  * A default implementation of the interface <code>Complex</code>. This class is used by
- * the factory function <code>toComplex</code>. If you would like to use your own
- * implementation of <code>Complex</code> you can do this by replacing <code>toComplex</code>
- * with a factory which is creating your custom class. So, the entire application code can
- * remain the same.
+ * the factory function <code>complex</code> (s. above). If you would like to use your own
+ * implementation of <code>Complex</code> you can do this by replacing <code>complex</code>
+ * with a factory function which is creating your custom class. In this way the entire
+ * application code can remain the same.
  */
 data class DefaultComplex(override val re: Double, override val im: Double = 0.0) : Complex {
     constructor(z: Complex) : this(z.re, z.im)
     constructor(str: String) : this(str.toComplex())
 
-    // the following three standard functions had to be overwritten because of a bug comparing
-    // data classes with -0.0 as Double value. Without these overwrites would be
-    // DefaultComplex(0.0, 0.0) != DefaultComplex(-0.0, 0.0) although 0.0 == -0.0:
+    // equals had to be overwritten because of a bug comparing data classes with
+    // -0.0 as (real or imaginary) Double value. Without overwriting equals the
+    // following would apply: DefaultComplex(0.0, 0.0) != DefaultComplex(-0.0, 0.0)
+    // although 0.0 == -0.0. The second reason is that complex number without
+    // imaginary part should be comparable with an object of type Number, e.g.
+    // it should be: complex(4, 0) == 4
 
-    open override fun toString(): String = asString()
-
-    open override fun equals(other: Any?): Boolean {
+    override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other === null) return false
         if (other is Complex) {
@@ -396,9 +403,11 @@ data class DefaultComplex(override val re: Double, override val im: Double = 0.0
         return false
     }
 
-    open override fun hashCode(): Int {
+    override fun hashCode(): Int {
         var result = re.hashCode()
         result = 31 * result + im.hashCode()
         return result
     }
+
+    override fun toString() = asString()
 }

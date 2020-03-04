@@ -328,4 +328,14 @@ class ComplexTest {
         assertEquals("-3.0-2.0i", complex(-3.0, -2.0).toString())
     }
 
+   @Test
+   fun testEquals() {
+       assertTrue(complex(4,0 ).equals(4L))
+       assertTrue(complex(4,0 ).equals(4))
+       assertTrue(complex(4,0 ).equals(4.0))
+       assertTrue(complex(4,0 ).equals(4.0f))
+       assertTrue(complex(4,0 ).equals(4.toBigDecimal()))
+       assertTrue(complex(4,0 ).equals(4.toBigInteger()))
+   }
+
 }
