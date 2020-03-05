@@ -81,3 +81,22 @@ var sqrt : (Complex) -> Complex = { z ->
 }
 
 fun sqrt(z: Number) = sqrt(complex(z.toDouble(), 0))
+
+/**
+ * Calculates the complex power. Please note, that similar to ln and sqrt the default
+ * value is returned here.
+ * @param z basis
+ * @param w exponent
+ */
+var pow : (Complex, Complex) -> Complex = { z, w ->
+    pow(z.mod, w) * exp(z.arg.I * w)
+}
+
+fun pow(x: Number, w:Complex): Complex {
+    val d = x.toDouble()
+    return when {
+        d < 0.0 -> NaN
+        d == 0.0 -> ZERO
+        else -> exp(kotlin.math.ln(d) * w)
+    }
+}
