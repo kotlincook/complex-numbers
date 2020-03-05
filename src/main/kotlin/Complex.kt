@@ -385,9 +385,7 @@ data class DefaultComplex(override val re: Double, override val im: Double = 0.0
     // equals had to be overwritten because of a bug comparing data classes with
     // -0.0 as (real or imaginary) Double value. Without overwriting equals the
     // following would apply: DefaultComplex(0.0, 0.0) != DefaultComplex(-0.0, 0.0)
-    // although 0.0 == -0.0. The second reason is that complex number without
-    // imaginary part should be comparable with an object of type Number, e.g.
-    // it should be: complex(4, 0) == 4
+    // although 0.0 == -0.0.
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -396,9 +394,6 @@ data class DefaultComplex(override val re: Double, override val im: Double = 0.0
             if (re != other.re) return false
             if (im != other.im) return false
             return true
-        }
-        if (other is Number) {
-            return im == 0.0 && re == other.toDouble()
         }
         return false
     }

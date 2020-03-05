@@ -22,8 +22,7 @@ fun exp(z: Number) = exp(complex(z.toDouble(), 0))
  */
 var ln :(Complex) -> Complex = { z ->
     when (z) {
-        ZERO, NaN -> NaN
-        INF -> INF
+        ZERO, INF, NaN -> NaN
         else -> complex(kotlin.math.ln(z.mod), atan2(z.im, z.re))
     }
 }

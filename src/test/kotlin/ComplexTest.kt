@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import java.lang.Math.PI
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 
@@ -66,9 +67,9 @@ class ComplexTest {
 
     @Test
     fun testMod() {
-        val z = "2.0+3.0i".toComplex()
+        val z = "2+3i".toComplex()
         val r = z.mod
-        assertEquals((!z * z).re,r * r, EPS)
+        assertEquals((!z * z).re, r * r, EPS)
     }
 
     @Test
@@ -94,9 +95,9 @@ class ComplexTest {
 
     @Test
     fun testComplexAddAndSub() {
-        val z0 = 2.0+3.0.I
-        assertEquals(z0,ZERO + z0)
-        assertEquals(-z0,ZERO - z0)
+        val z0 = 2.0 + 3.0.I
+        assertEquals(z0, ZERO + z0)
+        assertEquals(-z0, ZERO - z0)
         val testData = listOf(
                 Triple(INF, z0, INF),
                 Triple(NaN, z0, NaN),
@@ -114,19 +115,19 @@ class ComplexTest {
                 Triple(NaN, NaN, NaN)
         )
         for (t in testData) {
-            assertEquals(t.third,t.first + t.second,"${t.first} + ${t.second}")
-            assertEquals(t.third,t.first - t.second, "${t.first} - ${t.second}")
+            assertEquals(t.third, t.first + t.second, "${t.first} + ${t.second}")
+            assertEquals(t.third, t.first - t.second, "${t.first} - ${t.second}")
         }
     }
 
     @Test
     fun testDoubleAddAndSub() {
-        val z0 = 2.0+3.0.I
+        val z0 = 2.0 + 3.0.I
         val d0 = 3.0
-        assertEquals(complex(d0, 0.0),ZERO + d0)
-        assertEquals(complex(-d0, 0.0),ZERO - d0)
-        assertEquals(complex(5.0, 3.0),z0 + d0)
-        assertEquals(complex(-1.0, 3.0),z0 - d0)
+        assertEquals(complex(d0, 0.0), ZERO + d0)
+        assertEquals(complex(-d0, 0.0), ZERO - d0)
+        assertEquals(complex(5.0, 3.0), z0 + d0)
+        assertEquals(complex(-1.0, 3.0), z0 - d0)
 
         val testData = listOf(
                 Triple(INF, d0, INF),
@@ -148,16 +149,17 @@ class ComplexTest {
                 Triple(NaN, Double.NaN, NaN)
         )
         for (t in testData) {
-            assertEquals(t.third,t.first + t.second, "${t.first} + ${t.second}")
-            assertEquals(t.third,t.first - t.second, "${t.first} - ${t.second}")
-            assertEquals(t.third,t.second + t.first, "${t.second} + ${t.first}")
-            assertEquals(-t.third,t.second - t.first, "${t.second} - ${t.first}")
+            assertEquals(t.third, t.first + t.second, "${t.first} + ${t.second}")
+            assertEquals(t.third, t.first - t.second, "${t.first} - ${t.second}")
+            assertEquals(t.third, t.second + t.first, "${t.second} + ${t.first}")
+            assertEquals(-t.third, t.second - t.first, "${t.second} - ${t.first}")
         }
     }
 
+
     @Test
     fun testComplexMultiplication() {
-        val z0 = 2.0+3.0.I
+        val z0 = 2.0 + 3.0.I
         val testData = listOf(
                 Triple(ZERO, z0, ZERO),
                 Triple(INF, z0, INF),
@@ -176,13 +178,13 @@ class ComplexTest {
                 Triple(NaN, NaN, NaN)
         )
         for (t in testData) {
-            assertEquals(t.third,t.first * t.second, "${t.first} * ${t.second}")
+            assertEquals(t.third, t.first * t.second, "${t.first} * ${t.second}")
         }
     }
 
     @Test
     fun testDoubleMultiplication() {
-        val z0 = 3.0+3.0.I
+        val z0 = 3.0 + 3.0.I
         val d0 = 3.0
         val w0 = complex(9.0, 9.0)
         val testData = listOf(
@@ -208,14 +210,14 @@ class ComplexTest {
                 Triple(NaN, Double.NaN, NaN)
         )
         for (t in testData) {
-            assertEquals(t.third,t.first * t.second, "${t.first} * ${t.second}")
-            assertEquals(t.third,t.second * t.first, "${t.second} + ${t.first}")
+            assertEquals(t.third, t.first * t.second, "${t.first} * ${t.second}")
+            assertEquals(t.third, t.second * t.first, "${t.second} + ${t.first}")
         }
     }
 
     @Test
     fun testComplexDivision() {
-        val z0 = 2.0+3.0.I
+        val z0 = 2.0 + 3.0.I
         val testData = listOf(
                 Triple(z0, z0, ONE),
                 Triple(ZERO, z0, ZERO),
@@ -235,13 +237,13 @@ class ComplexTest {
                 Triple(NaN, NaN, NaN)
         )
         for (t in testData) {
-            assertEquals(t.third,t.first / t.second, "${t.first} / ${t.second}")
+            assertEquals(t.third, t.first / t.second, "${t.first} / ${t.second}")
         }
     }
 
     @Test
     fun testDoubleDivision() {
-        val z0 = 3.0+3.0.I
+        val z0 = 3.0 + 3.0.I
         val d0 = 3.0
         val w0 = complex(1.0, 1.0)
         val testData = listOf(
@@ -267,13 +269,13 @@ class ComplexTest {
                 Triple(NaN, Double.NaN, NaN)
         )
         for (t in testData) {
-            assertEquals(t.third,t.first / t.second, "${t.first} / ${t.second}")
+            assertEquals(t.third, t.first / t.second, "${t.first} / ${t.second}")
         }
     }
 
     @Test
     fun testDoubleDivisionReverse() {
-        val z0 = 3.0+3.0.I
+        val z0 = 3.0 + 3.0.I
         val d0 = 3.0
         val w0 = complex(0.5, -0.5)
         val testData = listOf(
@@ -299,8 +301,18 @@ class ComplexTest {
                 Triple(Double.NaN, NaN, NaN)
         )
         for (t in testData) {
-            assertEquals(t.third,t.first / t.second, "${t.first} / ${t.second}")
+            assertEquals(t.third, t.first / t.second, "${t.first} / ${t.second}")
         }
+    }
+
+
+    @Test
+    fun testNumberAddSubMulAndDiv() {
+        val z0 = 2 + 4.I
+        assertEquals(4.I, z0 + (-2))
+        assertEquals(4.I, z0 - 2)
+        assertEquals(4 + 8.I, z0 * 2)
+        assertEquals(1 + 2.I, z0 / 2)
     }
 
     @Test
@@ -328,14 +340,44 @@ class ComplexTest {
         assertEquals("-3.0-2.0i", complex(-3.0, -2.0).toString())
     }
 
-   @Test
-   fun testEquals() {
-       assertTrue(complex(4,0 ).equals(4L))
-       assertTrue(complex(4,0 ).equals(4))
-       assertTrue(complex(4,0 ).equals(4.0))
-       assertTrue(complex(4,0 ).equals(4.0f))
-       assertTrue(complex(4,0 ).equals(4.toBigDecimal()))
-       assertTrue(complex(4,0 ).equals(4.toBigInteger()))
-   }
+    @Test
+    fun testEquals() {
+        val z0 = complex(4, 5)
+        val z1 = 4 + 5.I
+        val four = complex(4, 0)
+        val fiveI = 5.I
+        assertEquals(z0, z1)
+        assertNotEquals(z0, four)
+        assertNotEquals(z0, fiveI)
+        assertTrue(!four.equals(4L))
+        assertTrue(!four.equals(4))
+        assertTrue(!four.equals(4.0))
+        assertTrue(!four.equals(4.0f))
+        assertTrue(!four.equals(4.toBigDecimal()))
+        assertTrue(!four.equals(4.toBigInteger()))
+        assertTrue(!four.equals(""))
+        assertTrue(four.equals("4".toComplex()))
+    }
+
+    @Test
+    fun testHashCode() {
+        val z0 = complex(4, 5)
+        val z1 = 4 + 5.I
+        val four = complex(4, 0)
+        val fiveI = 5.I
+        assertNotEquals(0, z0.hashCode())
+        assertNotEquals(0, four.hashCode())
+        assertNotEquals(0, fiveI.hashCode())
+        assertEquals(z0.hashCode(), z1.hashCode())
+    }
+
+    @Test
+    fun testConstructor() {
+        val z0 = complex(4, 5)
+        val z1 = DefaultComplex(z0)
+        assertEquals(z0, z1)
+        val z2 = DefaultComplex("4+5i")
+        assertEquals(z0, z2)
+    }
 
 }
