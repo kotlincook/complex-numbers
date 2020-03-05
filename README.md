@@ -1,16 +1,19 @@
 # complex-numbers
-Math interface for complex numbers including the four basic arithmetic operations +, -, *, / and
+A small library for the programming language Kotlin to work comfortably with 
+[complex numbers](https://en.wikipedia.org/wiki/Complex_number). 
+
+It includes the four basic arithmetic operations +, -, *, / and
 typical functions like exp, sin, cos, log, sqrt, etc.
 
-## Special feature
-The feature of this interface is, that it provides the functions mentioned above as default
-implementations. But these functions could easily be replaced (overwritten) by a class which
-would pass the computation (for example) to the well tested Apache common package due to
-performance or confidence reasons. 
+A nice feature of Kotlin is that the operators +, -, *, / can be overloaded so that
+they work with all other numeric types in all combinations.  
 
-## Web site with further information
+## Web site
+On http://kotlinmath.org you can find further information and some examples 
+of how to use this library.
 
-http://kotlinmath.org
+## Build
+Maven (tested with version 3.6.3)
 
 # Examples 
 You can define the complex number 4+3i in four ways:
@@ -31,3 +34,9 @@ There are standard function like exp, sin, cos, log and sqrt:
 
 You can use the constants ZERO, ONE, and INF for 0, 1 and infinity as compley numbers
 * ```val thisIsTrue = -1 / ZERO == INF & ONE / 0 == INF & 3 / INF == ZERO```
+
+## Special feature
+The feature of this interface is, that it provides the functions mentioned above as default
+implementations. But these functions could easily be replaced (overwritten) by a class which
+would pass the computation (for example) to the well tested Apache common package due to
+performance or confidence reasons. 

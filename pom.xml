@@ -4,22 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.kotlincook</groupId>
+    <groupId>org.kotlinmath</groupId>
     <artifactId>complex-numbers</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties>
-        <kotlin.version>1.3.70</kotlin.version>
-        <jupiter.version>5.6.0</jupiter.version>
-        <common.math.version>3.6.1</common.math.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <name>Kotlin Complex Numbers</name>
+    <description>A lightweight library that allows a comfortable handling
+        of complex numbers in Kotlin</description>
+    <url>https://github.com/kotlincook/complex-numbers</url>
 
-    <scm>
-        <connection>scm:git:git://github.com/kotlincook/complex-numbers.git</connection>
-        <developerConnection>scm:git:git@github.com/kotlincook/complex-numbers.git</developerConnection>
-        <url>https://github.com/kotlincook/complex-numbers.git</url>
-    </scm>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -29,6 +29,19 @@
             <id>kotlincook</id>
         </developer>
     </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/kotlincook/complex-numbers.git</connection>
+        <developerConnection>scm:git:git@github.com/kotlincook/complex-numbers.git</developerConnection>
+        <url>https://github.com/kotlincook/complex-numbers.git</url>
+    </scm>
+
+    <properties>
+        <kotlin.version>1.3.70</kotlin.version>
+        <jupiter.version>5.6.0</jupiter.version>
+        <common.math.version>3.6.1</common.math.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
