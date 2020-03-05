@@ -31,4 +31,5 @@ fun main() {
     println(sqrt(1))
     println(exp(ln(2.I)))
     println((2+3.I)*(3+4.I))
+    println(-INF)
 }

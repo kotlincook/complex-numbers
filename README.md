@@ -32,8 +32,17 @@ There are standard function like exp, sin, cos, log and sqrt:
 * ```val two = 2.R // number two as complex number```
 * ```val fourI = 4.I // four times i```
 
-You can use the constants ZERO, ONE, and INF for 0, 1 and infinity as compley numbers
-* ```val thisIsTrue = -1 / ZERO == INF & ONE / 0 == INF & 3 / INF == ZERO```
+There are constants INF, NaN (also ZERO and ONE) as infinity and "Not a Number" which
+can also be used for calculations:
+* ```-1 / ZERO == INF```
+* ```ONE / 0 == INF``` 
+* ```3 / INF == ZERO```
+* ```INF + INF == NaN```
+* ```ln(0) == NaN```
+* ```exp(INF) == NaN```
+* ```sin(NaN) == NaN```
+
+Note that there is no -INF in complex numbers, so that ```-INF == INF```. 
 
 ## Special feature
 The feature of this interface is, that it provides the functions mentioned above as default
