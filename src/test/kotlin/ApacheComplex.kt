@@ -38,14 +38,18 @@ data class ApacheComplex(val value: org.apache.commons.math3.complex.Complex) : 
      */
     override operator fun plus(z: Complex) =
             ApacheComplex(value.add((z as ApacheComplex).value))
+
+    override fun toString(): String {
+        return zeroSnap().asString("%.2f")
+    }
 }
 
 
 fun main() {
     // Using the implementation ApacheComplex instead of DefaultComplex:
     ApacheComplex.activate()
-    println(((2.0 + 3.0 * I) * (5.0 + 7.0.I)).asString("%.2f"))
-    println(exp(PI * I).asString("%.2f"))
+    println(((2.0 + 3.0 * I) * (5.0 + 7.0.I)))
+    println(exp(PI * I))
     println(ONE / ZERO)
     val z = 3+4.I
     println(z*z)

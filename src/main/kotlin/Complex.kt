@@ -14,6 +14,10 @@ import kotlin.math.*
  */
 interface Complex {
 
+    companion object {
+        const val DEFAULT_ZERO_SNAP_PRECISION = 1E-13
+    }
+
     /** Real part */
     val re: Double
 
@@ -233,6 +237,17 @@ interface Complex {
     }
 
     /**
+     * Sets the real and/or the imaginary part to 0 if the value is lower than precision
+     * @param precision
+     * @return the "rounded" number
+     */
+    fun zeroSnap(precision: Double = DEFAULT_ZERO_SNAP_PRECISION): Complex {
+        return complex(if (abs(re) <= precision) 0 else re,
+                if (abs(im) <= precision) 0 else im
+        )
+    }
+
+    /**
      * A string representation of a complex number (this) in the Form "2.5+3.1i" for example.
      * @param format This parameter affects the real an the imaginary part equally.
      * @param locale The locale determines e.g. whether a dot or a comma is output.
@@ -378,7 +393,7 @@ val INF = complex(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY)
  * with a factory function which is creating your custom class. In this way the entire
  * application code can remain the same.
  */
-data class DefaultComplex(override val re: Double, override val im: Double = 0.0) : Complex {
+open class DefaultComplex(override val re: Double, override val im: Double = 0.0) : Complex {
     constructor(z: Complex) : this(z.re, z.im)
     constructor(str: String) : this(str.toComplex())
 

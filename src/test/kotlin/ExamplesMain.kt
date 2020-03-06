@@ -7,6 +7,14 @@ import kotlin.math.PI
  * A series of common usages are shown below
  */
 fun main() {
+
+    class MyComplex(re: Double, im: Double = 0.0): DefaultComplex(re, im) {
+        override fun toString(): String {
+            return zeroSnap().asString()
+        }
+    }
+    complex = { re, im -> MyComplex(re.toDouble(), im.toDouble()) }
+
     val z1 = 3 + 4.I
     val z2 = I * z1
     val z3 = "4+3i".toComplex()
@@ -23,7 +31,7 @@ fun main() {
     println(-0.0 == 0.0)
     println(-0.0 - 0.0)
     println(complex(2.0, -2.0))
-    println(exp(PI / 2 * I).asString(locale = Locale.US))
+    println(exp(PI / 2 * I))
     println(cos(ZERO))
     println(sin(PI / 2 * ONE))
     println(2 * ONE / 2.I)

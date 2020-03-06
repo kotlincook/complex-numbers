@@ -87,6 +87,7 @@ fun sqrt(z: Number) = sqrt(complex(z.toDouble(), 0))
  * value is returned here.
  * @param z basis
  * @param w exponent
+ * @return the power z^w
  */
 var pow : (Complex, Complex) -> Complex = { z, w ->
     pow(z.mod, w) * exp(z.arg.I * w)

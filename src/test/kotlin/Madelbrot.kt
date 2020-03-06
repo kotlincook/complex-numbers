@@ -48,7 +48,7 @@ fun main() {
     }
     println("Calculation time: $time")
     val frame = JFrame()
-    frame.getContentPane().setLayout(FlowLayout())
+    frame.contentPane.setLayout(FlowLayout())
     frame.contentPane.add(JLabel(ImageIcon(bufferedImage)))
     frame.pack()
     frame.isVisible = true

@@ -6,22 +6,12 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import java.lang.Math.PI
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 
-const val EPS = 1E-13
-
 class ComplexTest {
-
-    private fun assertEquals(expected: Number, actual: Number, precision: Double, message: String? = null) =
-            assertTrue(Math.abs(expected.toDouble() - actual.toDouble()) < precision,
-                    message ?: "Expected <$expected>, actual <$actual>")
-
-    private fun assertEquals(expected: Complex, actual: Complex, precision: Double, message: String? = null) =
-            assertTrue((expected - actual).mod < precision,
-                    message ?: "Expected <$expected>, actual <$actual>")
-
 
     @ParameterizedTest()
     @CsvSource(value =
@@ -56,33 +46,33 @@ class ComplexTest {
 
     @Test
     fun testPolar() {
-        assertEquals(I, exp((PI / 2).I), EPS)
+        assertQuasiEquals(I, exp((PI / 2).I))
     }
 
     @Test
     fun testEulerEquation() {
         val z = "2.0+3.0I".toComplex()
-        assertEquals(cos(z) + I * sin(z), exp(I * z), EPS)
+        assertQuasiEquals(cos(z) + I * sin(z), exp(I * z))
     }
 
     @Test
     fun testMod() {
         val z = "2+3i".toComplex()
         val r = z.mod
-        assertEquals((!z * z).re, r * r, EPS)
+        assertQuasiEquals((!z * z).re, r * r)
     }
 
     @Test
     fun testArg() {
         assertEquals(0.0, ZERO.arg)
         assertEquals(0.0, (5 * ONE).arg)
-        assertEquals(0.5, exp(0.5 * I).arg, EPS)
-        assertEquals(PI / 2, 3.I.arg, EPS)
-        assertEquals(3, exp(3 * I).arg, EPS)
-        assertEquals(PI, (-2.R).arg, EPS)
-        assertEquals(4 - 2 * PI, exp(4 * I).arg, EPS)
-        assertEquals(-PI / 2, (-3.I).arg, EPS)
-        assertEquals(6 - 2 * PI, exp(6 * I).arg, EPS)
+        assertEquals(0.5, exp(0.5 * I).arg)
+        assertEquals(PI / 2, 3.I.arg)
+        assertQuasiEquals(3, exp(3 * I).arg)
+        assertEquals(PI, (-2.R).arg)
+        assertEquals(4 - 2 * PI, exp(4 * I).arg)
+        assertEquals(-PI / 2, (-3.I).arg)
+        assertQuasiEquals(6 - 2 * PI, exp(6 * I).arg)
     }
 
     @Test
@@ -349,13 +339,13 @@ class ComplexTest {
         assertEquals(z0, z1)
         assertNotEquals(z0, four)
         assertNotEquals(z0, fiveI)
-        assertTrue(!four.equals(4L))
-        assertTrue(!four.equals(4))
-        assertTrue(!four.equals(4.0))
-        assertTrue(!four.equals(4.0f))
-        assertTrue(!four.equals(4.toBigDecimal()))
-        assertTrue(!four.equals(4.toBigInteger()))
-        assertTrue(!four.equals(""))
+        assertFalse(four.equals(4L))
+        assertFalse(four.equals(4))
+        assertFalse(four.equals(4.0))
+        assertFalse(four.equals(4.0f))
+        assertFalse(four.equals(4.toBigDecimal()))
+        assertFalse(four.equals(4.toBigInteger()))
+        assertFalse(four.equals(""))
         assertTrue(four.equals("4".toComplex()))
     }
 
