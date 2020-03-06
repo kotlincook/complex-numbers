@@ -30,7 +30,7 @@ fun mand(z0: Complex, max: Int): Int {
 fun main() {
     // ApacheComplex.activate()
     // LazyModArgComplex.activate()
-    CachingModArgComplex.activate()
+    // CachingModArgComplex.activate()
 
     val n = 512 // creates an n x n image
     val bufferedImage = BufferedImage(n, n, TYPE_INT_RGB)
