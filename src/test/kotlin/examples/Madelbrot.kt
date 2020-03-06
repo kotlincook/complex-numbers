@@ -1,5 +1,7 @@
-package org.kotlinmath
+package org.kotlinmath.examples
 
+import org.kotlinmath.Complex
+import org.kotlinmath.complex
 import java.awt.Color
 import java.awt.FlowLayout
 import java.awt.image.BufferedImage
@@ -26,7 +28,10 @@ fun mand(z0: Complex, max: Int): Int {
 }
 
 fun main() {
-//    ApacheComplex.activate()
+    // ApacheComplex.activate()
+    // LazyModArgComplex.activate()
+    CachingModArgComplex.activate()
+
     val n = 512 // creates an n x n image
     val bufferedImage = BufferedImage(n, n, TYPE_INT_RGB)
     val xc = -0.5

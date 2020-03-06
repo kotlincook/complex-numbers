@@ -1,5 +1,7 @@
-package org.kotlinmath
+package org.kotlinmath.examples
 
+import org.kotlinmath.*
+import org.kotlinmath.exp
 import kotlin.math.PI
 
 /**

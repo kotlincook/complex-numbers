@@ -1,6 +1,9 @@
-package org.kotlinmath
+package org.kotlinmath.examples
 
-import java.util.*
+import org.kotlinmath.*
+import org.kotlinmath.exp
+import org.kotlinmath.ln
+import org.kotlinmath.sin
 import kotlin.math.PI
 
 /**
@@ -18,10 +21,10 @@ fun main() {
     val z1 = 3 + 4.I
     val z2 = I * z1
     val z3 = "4+3i".toComplex()
-    val z4 = I * z3 + exp(I * PI/2) + sqrt(-9) / ln(z2)
+    val z4 = I * z3 + exp(I * PI / 2) + sqrt(-9) / ln(z2)
     val z5 = 1.5F / z4 * 2 - 4.32 + 10L + (3.toBigDecimal() * I)
     val thisIsTrue = 1 / ZERO == INF && ONE / 0 == INF && (1 / INF) == ZERO
-    val z6 = I * z5 + exp(I * PI/2) + sqrt(-9)
+    val z6 = I * z5 + exp(I * PI / 2) + sqrt(-9)
 
     println(thisIsTrue)
     print(z6)
