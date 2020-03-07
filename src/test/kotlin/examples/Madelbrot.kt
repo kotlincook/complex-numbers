@@ -34,9 +34,9 @@ fun main() {
 
     val n = 512 // creates an n x n image
     val bufferedImage = BufferedImage(n, n, TYPE_INT_RGB)
-    val xc = -0.5
-    val yc = 0.0
-    val size = 2.0
+    val xc = -0.5 // center
+    val yc = 0.0  // center
+    val size = 2.0 // scaling
     val max = 255 // maximum number of iterations
 
     val time = measureTimeMillis {
@@ -46,15 +46,17 @@ fun main() {
                 val y0 = yc - size / 2 + size * j / n
                 val z0 = complex(x0, y0)
                 val gray = max - mand(z0, max)
+                // Number of iterations "until z.mod > 2.0" should have different colors:
                 val color = Color(gray / 2, gray * gray % 256, gray * gray * gray % 256)
                 bufferedImage.setRGB(i, j, color.rgb)
             }
         }
     }
     println("Calculation time: $time")
-    val frame = JFrame()
-    frame.contentPane.setLayout(FlowLayout())
-    frame.contentPane.add(JLabel(ImageIcon(bufferedImage)))
-    frame.pack()
-    frame.isVisible = true
+    with (JFrame()) {
+        contentPane.setLayout(FlowLayout())
+        contentPane.add(JLabel(ImageIcon(bufferedImage)))
+        pack()
+        isVisible = true
+    }
 }
