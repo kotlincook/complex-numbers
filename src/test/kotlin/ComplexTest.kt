@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
 
 class ComplexTest {
 
-    @ParameterizedTest()
+    @ParameterizedTest
     @CsvSource(value =
     ["i;0.0;1.0", "-i;0.0;-1.0", "2i;0.0;2.0", "-2i;0.0;-2.0", "3 -2 i;3.0;-2.0",
         "1.0+i;1.0;1.0", "1.0-i;1.0;-1.0", "-2.0+i;-2.0;1.0", "-2.0-i;-2.0;-1.0", "2.0+3.0i;2.0;3.0",

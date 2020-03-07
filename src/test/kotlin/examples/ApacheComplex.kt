@@ -7,7 +7,7 @@ import kotlin.math.PI
 /**
  * This class is an example how you could create and use another class (besides DefaultComplex)
  * implementing the interface Complex. In this case a Java implementation of Apache is used
- * as underlying class. Here the exponential funcion and the two operations plus and times are
+ * as underlying class. Here the exponential function and the two operations plus and times are
  * overwritten (resp. replaced) exemplary so that these operation are executed by the Apache
  * library classes.
  */

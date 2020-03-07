@@ -18,7 +18,7 @@ import kotlin.system.measureTimeMillis
  * <code>max</code> iterations
  * @return number of iterations
  */
-fun mand(z0: Complex, max: Int): Int {
+fun mandelbrot(z0: Complex, max: Int): Int {
     var z = z0
     repeat(max) {
         if (z.mod > 2.0) return it
@@ -45,7 +45,7 @@ fun main() {
                 val x0 = xc - size / 2 + size * i / n
                 val y0 = yc - size / 2 + size * j / n
                 val z0 = complex(x0, y0)
-                val gray = max - mand(z0, max)
+                val gray = max - mandelbrot(z0, max)
                 // Number of iterations "until z.mod > 2.0" should have different colors:
                 val color = Color(gray / 2, gray * gray % 256, gray * gray * gray % 256)
                 bufferedImage.setRGB(i, j, color.rgb)
@@ -54,7 +54,7 @@ fun main() {
     }
     println("Calculation time: $time")
     with (JFrame()) {
-        contentPane.setLayout(FlowLayout())
+        contentPane.layout = FlowLayout()
         contentPane.add(JLabel(ImageIcon(bufferedImage)))
         pack()
         isVisible = true

@@ -25,10 +25,11 @@ interface Complex {
     val im: Double
 
     // Hint: Usually it is not necessary to override the (calculated) properties
-    // arg and mod with a lazy and caching-like kind. Using Kotlin's lazy increases the
-    // execution time by a factor of 6.
+    // arg and mod with a lazy and caching-like kind. Using Kotlin's "lazy" increases
+    // the execution time by a factor of 6. So the properties would have to be read
+    // at least six times before caching would pay off, which is quite unlikely.
 
-    /** The arguemnt of this complex number (angle of the polar coordinate representation) */
+    /** The argument of this complex number (angle of the polar coordinate representation) */
     val arg: Double
         get() {
             return when {
@@ -137,7 +138,7 @@ interface Complex {
 
     /**
      * Times operator multiplying two complex numbers
-     * @param z the multiplicant
+     * @param z the multiplicand
      * @return product of this and z
      */
     operator fun times(z: Complex): Complex {
@@ -151,7 +152,7 @@ interface Complex {
 
     /**
      * Times operator multiplying a complex number and one of type Double
-     * @param x the multiplicant
+     * @param x the multiplicand
      * @return product of this and x
      */
     operator fun times(x: Double): Complex {
@@ -165,7 +166,7 @@ interface Complex {
 
     /**
      * Times operator multiplying a complex number and one of type Number except Double
-     * @param x the multiplicant
+     * @param x the multiplicand
      * @return the product of this and x
      */
     operator fun times(x: Number) = times(x.toDouble())
@@ -261,19 +262,19 @@ interface Complex {
             NaN -> "NaN"
             INF -> "Infinity"
             else -> {
-                val reFormattet = if (format.isEmpty()) re.toString() else String.format(locale, format, re)
-                val imFormattet = when (im) {
+                val reFormatted = if (format.isEmpty()) re.toString() else String.format(locale, format, re)
+                val imFormatted = when (im) {
                     1.0 -> "i"
                     -1.0 -> "-i"
                     else -> "${if (format.isEmpty()) im.toString() else String.format(locale, format, im)}i"
                 }
                 if (re == 0.0) {
-                    if (im == 0.0) "0.0" else imFormattet
+                    if (im == 0.0) "0.0" else imFormatted
                 } else {
                     when {
-                        im > 0.0 -> "$reFormattet+$imFormattet"
-                        im < 0.0 -> "$reFormattet$imFormattet"
-                        else -> reFormattet
+                        im > 0.0 -> "$reFormatted+$imFormatted"
+                        im < 0.0 -> "$reFormatted$imFormatted"
+                        else -> reFormatted
                     }
                 }
             }
@@ -303,15 +304,15 @@ val Number.R: Complex
 operator fun Number.plus(z: Complex) = z + this
 
 /**
- * Minus operator sutracting a number of type Number and a complex one
+ * Minus operator subtracting a number of type Number and a complex one
  * @param z the minuend
- * @return diffenence of this and z
+ * @return difference of this and z
  */
 operator fun Number.minus(z: Complex) = -z + this
 
 /**
  * Times operator multiplying a number of type Number and a complex one
- * @param z the multiplicant
+ * @param z the multiplicand
  * @return product of this and z
  */
 operator fun Number.times(z: Complex) = z * this

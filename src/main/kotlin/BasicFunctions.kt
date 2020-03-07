@@ -9,7 +9,7 @@ var exp : (Complex) -> Complex = { z ->
     when (z) {
         NaN, INF -> NaN
         else -> {
-            val r: Double = Math.exp(z.re)
+            val r: Double = kotlin.math.exp(z.re)
             complex(r * kotlin.math.cos(z.im), r * kotlin.math.sin(z.im))
         }
     }
@@ -70,7 +70,7 @@ var sqrt : (Complex) -> Complex = { z ->
         INF -> INF
         NaN -> NaN
         else -> {
-            val t: Double = Math.sqrt((Math.abs(z.re) + z.mod) / 2)
+            val t: Double = kotlin.math.sqrt((abs(z.re) + z.mod) / 2)
             if (z.re >= 0) {
                 complex(t, z.im / (2 * t))
             } else {

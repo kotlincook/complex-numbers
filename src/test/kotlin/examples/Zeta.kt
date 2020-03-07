@@ -2,7 +2,6 @@ package org.kotlinmath.examples
 
 import org.kotlinmath.*
 import java.lang.Math.PI
-import java.math.BigDecimal
 import kotlin.math.pow
 
 fun zeta(s: Complex): Complex {
@@ -19,7 +18,5 @@ fun main() {
 
     println(PI.pow(6) / 945)
     println(zeta(6))
-
-    println(Math.pow(0.0, 0.0))
 }
 
