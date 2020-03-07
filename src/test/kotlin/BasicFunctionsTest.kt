@@ -67,4 +67,27 @@ class BasicFunctionsTest {
         assertEquals(NaN, sqrt(NaN))
     }
 
+    @Test
+    fun testPow() {
+        assertEquals(ONE, pow(0, ZERO))
+        assertEquals(ZERO, pow(0, 3.R))
+        assertQuasiEquals(ONE, pow(E, 2 * PI.I))
+        assertQuasiEquals(-2.R, pow(E, ln(2) + PI.I))
+        assertEquals(ONE, pow(ZERO, ZERO))
+        assertEquals(ONE, pow(ONE, 3.R))
+        assertQuasiEquals(0.20787957635076193.R, pow(I, I))
+        assertQuasiEquals(0.12900959407446697 + 0.03392409290517014.I, pow((1 + 2.I), (3 + 4.I)))
+    }
+
+    @Test
+    fun testPowZetaValues() {
+        val w = 0.5 + 14.134725141734693790457251983562.I
+        assertQuasiEquals(ONE, pow(1, w))
+        assertQuasiEquals(-1.3171414230751064 - 0.5149159850108396.I, pow(2, w))
+        assertQuasiEquals(-1.7042590259602113 + 0.30903263975372064.I, pow(3, w))
+        assertQuasiEquals(1.4697230567606336 + 1.356434346522595.I, pow(4, w))
+        assertQuasiEquals(-1.6241462732233494 - 1.536928392338012.I, pow(5, w))
+        assertQuasiEquals(-6.366647462900551 + 7.711407140278745.I, pow(100, w))
+    }
+
 }

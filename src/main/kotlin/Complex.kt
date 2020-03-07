@@ -24,6 +24,10 @@ interface Complex {
     /** Imaginary part */
     val im: Double
 
+    // Hint: Usually it is not necessary to override the (calculated) properties
+    // arg and mod with a lazy and caching-like kind. Using Kotlin's lazy increases the
+    // execution time by a factor of 6.
+
     /** The arguemnt of this complex number (angle of the polar coordinate representation) */
     val arg: Double
         get() {

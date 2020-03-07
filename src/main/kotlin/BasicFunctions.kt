@@ -97,6 +97,7 @@ fun pow(x: Number, w:Complex): Complex {
     val d = x.toDouble()
     return when {
         d < 0.0 -> NaN
+        w == ZERO -> ONE
         d == 0.0 -> ZERO
         else -> exp(kotlin.math.ln(d) * w)
     }
