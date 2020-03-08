@@ -9,8 +9,18 @@ A nice feature of Kotlin is that the operators +, -, *, / can be overloaded so t
 they work with all other numeric types in all combinations.  
 
 ## Web site
-On http://kotlinmath.org you can find further information and some examples 
+On [Kotlin Math](http://kotlinmath.org) you can find further information and some examples 
 of how to use this library.
+
+## Installation
+The artifact is available on the [Maven Central Repository](https://search.maven.org/)
+### Maven
+    <groupId>org.kotlinmath</groupId>
+    <artifactId>complex-numbers</artifactId>
+    <version>1.0</version>
+    
+### Gradle
+    compile group: 'org.kotlinmath', name: 'complex-numbers', version: '1.0'
 
 ## Build
 Maven (tested with version 3.6.3)
