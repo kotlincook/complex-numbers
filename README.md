@@ -26,31 +26,49 @@ The artifact is available on the [Maven Central Repository](https://search.maven
 Maven (tested with version 3.6.3)
 
 # Examples 
+```import org.kotlinmath.*```
+
 You can define the complex number 4+3i in four ways:
-* ```val z1 = 4 + 3.I```
-* ```val z2 = 4 + 3 * I```
-* ```val z3 = complex(3, 4)```
-* ```val z4 = "4+3i".toComplex()```
+
+```val z1 = 4 + 3.I```
+
+```val z2 = 4 + 3 * I```
+
+```val z3 = complex(3, 4)```
+
+```val z4 = "4+3i".toComplex()```
 
 You can use the operators +, -, *, and / with any other numeric type:
-* ```val w1 = 1.5F / z1 * 2 - 4.32 + 10L + (3.toBigDecimal() * I)```
+
+```val w1 = 1.5F / z1 * 2 - 4.32 + 10L + (3.toBigDecimal() * I)```
 
 There are standard function like exp, sin, cos, log and sqrt:
-* ```val w1 = I * z1 + exp(I * PI/2) + sqrt(-9)```
+
+```val w1 = I * z1 + exp(I * PI/2) + sqrt(-9)```
 
 .I creates a pure imaginary number; .R creates a complex number without imaginary part:
-* ```val two = 2.R // number two as complex number```
-* ```val fourI = 4.I // four times i```
+
+```val two = 2.R // number two as complex number```
+
+```val fourI = 4.I // four times i```
 
 There are constants INF, NaN (also ZERO and ONE) as infinity and "Not a Number" which
 can also be used for calculations:
-* ```-1 / ZERO == INF```
-* ```ONE / 0 == INF``` 
-* ```3 / INF == ZERO```
-* ```INF + INF == NaN```
-* ```ln(0) == NaN```
-* ```exp(INF) == NaN```
-* ```sin(NaN) == NaN```
+
+```-1 / ZERO == INF```
+
+```ONE / 0 == INF```
+
+```3 / INF == ZERO```
+
+```INF + INF == NaN```
+
+```ln(0) == NaN```
+
+```exp(INF) == NaN```
+
+```sin(NaN) == NaN```
+
 
 Note that there is no -INF in complex numbers, so that ```-INF == INF```. 
 
