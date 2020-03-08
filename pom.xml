@@ -154,7 +154,7 @@
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
-                        <phase>pre-site</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>dokka</goal>
                             <goal>javadoc</goal>

@@ -15,6 +15,11 @@ var exp : (Complex) -> Complex = { z ->
     }
 }
 
+/**
+ * Exponential function
+ * @param z input
+ * @return exp(z)
+ */
 fun exp(z: Number) = exp(complex(z.toDouble(), 0))
 
 /**
@@ -27,6 +32,11 @@ var ln :(Complex) -> Complex = { z ->
     }
 }
 
+/**
+ * Logarithmic function
+ * @param z input
+ * @return ln(z)
+ */
 fun ln(z: Number) = ln(complex(z.toDouble(), 0))
 
 /**
@@ -43,6 +53,11 @@ var sin : (Complex) -> Complex = { z ->
     }
 }
 
+/**
+ * Sinus function
+ * @param z input
+ * @return sin(z)
+ */
 fun sin(z: Number) = sin(complex(z.toDouble(), 0))
 
 /**
@@ -59,7 +74,13 @@ var cos : (Complex) -> Complex = { z ->
     }
 }
 
+/**
+ * Cosinus function
+ * @param z input
+ * @return cos(z)
+ */
 fun cos(z: Number) = cos(complex(z.toDouble(), 0))
+
 
 /**
  * Main branch of the Square Root function
@@ -80,6 +101,11 @@ var sqrt : (Complex) -> Complex = { z ->
     }
 }
 
+/**
+ * Square Root function
+ * @param z input
+ * @return sqrt(z)
+ */
 fun sqrt(z: Number) = sqrt(complex(z.toDouble(), 0))
 
 /**
@@ -93,6 +119,12 @@ var pow : (Complex, Complex) -> Complex = { z, w ->
     pow(z.mod, w) * exp(z.arg.I * w)
 }
 
+/**
+ * The power function
+ * @param x base
+ * @param w exponent
+ * @return x^w
+ */
 fun pow(x: Number, w:Complex): Complex {
     val d = x.toDouble()
     return when {
