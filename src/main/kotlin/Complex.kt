@@ -33,6 +33,8 @@ interface Complex {
     val arg: Double
         get() {
             return when {
+                isInfinite() -> Double.NaN
+                isNaN() -> Double.NaN
                 re > 0.0 -> atan(im / re)
                 re < 0.0 && im >= 0.0 -> atan(im / re) + PI
                 re < 0.0 && im < 0.0 -> atan(im / re) - PI

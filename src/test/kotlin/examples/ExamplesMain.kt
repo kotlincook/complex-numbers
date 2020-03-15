@@ -1,9 +1,11 @@
 package org.kotlinmath.examples
 
+import org.junit.jupiter.api.assertTimeout
 import org.kotlinmath.*
 import org.kotlinmath.exp
 import org.kotlinmath.ln
 import org.kotlinmath.sin
+import org.kotlinmath.pow
 import kotlin.math.PI
 
 /**
@@ -43,4 +45,14 @@ fun main() {
     println(exp(ln(2.I)))
     println((2+3.I)*(3+4.I))
     println(-INF)
+
+
+    println(Math.pow(0.0, Double.POSITIVE_INFINITY))
+    println(pow(-0.1.I, 10.R))
+    println("***************************")
+    for (n in 1 ..10) {
+        println("$n: " + pow(0.2*exp((2*PI/n).I), 100.I).mod)
+    }
+    println(pow(0.2, 100.I))
+
 }

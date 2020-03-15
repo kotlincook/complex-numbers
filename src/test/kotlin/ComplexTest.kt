@@ -57,6 +57,8 @@ class ComplexTest {
 
     @Test
     fun testMod() {
+        assertEquals(Double.POSITIVE_INFINITY, INF.mod)
+        assertEquals(Double.NaN, NaN.mod)
         val z = "2+3i".toComplex()
         val r = z.mod
         assertQuasiEquals((!z * z).re, r * r)
@@ -65,6 +67,8 @@ class ComplexTest {
     @Test
     fun testArg() {
         assertEquals(0.0, ZERO.arg)
+        assertEquals(Double.NaN, INF.arg)
+        assertEquals(Double.NaN, NaN.arg)
         assertEquals(0.0, (5 * ONE).arg)
         assertEquals(0.5, exp(0.5 * I).arg)
         assertEquals(PI / 2, 3.I.arg)

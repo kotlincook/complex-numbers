@@ -129,7 +129,11 @@ fun pow(x: Number, w:Complex): Complex {
     val d = x.toDouble()
     return when {
         d < 0.0 -> NaN
-        w == ZERO -> ONE
+        d.isInfinite() -> NaN
+        d.isNaN() -> NaN
+        w.isInfinite() -> NaN
+        w.isNaN() -> NaN
+        w.isZero() -> ONE
         d == 0.0 -> ZERO
         else -> exp(kotlin.math.ln(d) * w)
     }

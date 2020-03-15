@@ -68,21 +68,102 @@ class BasicFunctionsTest {
     }
 
     @Test
-    fun testPow() {
+    fun testPowDoubleComplex() {
+        val w0 = ln(2) + PI.I
+        val w1 = 2 * PI.I
+        val w2 = 2.R
+        val w3 = 0.5 + 14.13472514173469379.I
+
         assertEquals(ONE, pow(0, ZERO))
-        assertEquals(ZERO, pow(0, 3.R))
-        assertQuasiEquals(ONE, pow(E, 2 * PI.I))
-        assertQuasiEquals(-2.R, pow(E, ln(2) + PI.I))
+        assertEquals(ZERO, pow(0, ONE))
+        assertEquals(ZERO, pow(0, I))
+        assertEquals(ZERO, pow(0, w0))
+        assertEquals(ZERO, pow(0, w1))
+        assertEquals(ZERO, pow(0, w2))
+        assertEquals(NaN, pow(0, INF))
+        assertEquals(NaN, pow(0, NaN))
+
+        assertEquals(ONE, pow(1, ZERO))
+        assertEquals(ONE, pow(1, ONE))
+        assertEquals(ONE, pow(1, I))
+        assertEquals(ONE, pow(1, w0))
+        assertEquals(ONE, pow(1, w1))
+        assertEquals(ONE, pow(1, w2))
+        assertEquals(NaN, pow(1, INF))
+        assertEquals(NaN, pow(1, NaN))
+
+        assertEquals(ONE, pow(E, ZERO))
+        assertQuasiEquals(E.R, pow(E, ONE))
+        assertQuasiEquals(0.54030230586813 + 0.84147098480790.I, pow(E, I))
+        assertQuasiEquals(-2.R, pow(E, w0))
+        assertQuasiEquals(ONE, pow(E, w1))
+        assertQuasiEquals(7.38905609893065.R, pow(E, w2))
+        assertEquals(NaN, pow(E, INF))
+        assertEquals(NaN, pow(E, NaN))
+
+        assertQuasiEquals(-1.3171414230751064 - 0.5149159850108396.I, pow(2, w3))
+        assertQuasiEquals(-1.7042590259602113 + 0.30903263975372064.I, pow(3, w3))
+        assertQuasiEquals(1.4697230567606336 + 1.356434346522595.I, pow(4, w3))
+        assertQuasiEquals(-1.6241462732233494 - 1.536928392338012.I, pow(5, w3))
+        assertQuasiEquals(-6.366647462900551 + 7.711407140278745.I, pow(100, w3))
+
+        for (w in listOf(ZERO, ONE, I, 3.R, w1, w0, INF, NaN)) {
+            assertEquals(NaN, pow(-1, w))
+            assertEquals(NaN, pow(Double.POSITIVE_INFINITY, w))
+            assertEquals(NaN, pow(Double.NEGATIVE_INFINITY, w))
+            assertEquals(NaN, pow(Double.NaN, w))
+        }
+    }
+
+
+    @Test
+    fun testPowComplexComplex() {
+        val w0 = ln(2) + PI.I
+        val w1 = 2 * PI.I
+        val w2 = 2.R
+
         assertEquals(ONE, pow(ZERO, ZERO))
-        assertEquals(ONE, pow(ONE, 3.R))
+        assertEquals(ZERO, pow(ZERO, ONE))
+        assertEquals(ZERO, pow(ZERO, I))
+        assertEquals(ZERO, pow(ZERO, w0))
+        assertEquals(ZERO, pow(ZERO, w1))
+        assertEquals(ZERO, pow(ZERO, w2))
+        assertEquals(NaN, pow(ZERO, INF))
+        assertEquals(NaN, pow(ZERO, NaN))
+
+        assertEquals(ONE, pow(ONE, ZERO))
+        assertEquals(ONE, pow(ONE, ONE))
+        assertEquals(ONE, pow(ONE, I))
+        assertEquals(ONE, pow(ONE, w0))
+        assertEquals(ONE, pow(ONE, w1))
+        assertEquals(ONE, pow(ONE, w2))
+        assertEquals(NaN, pow(ONE, INF))
+        assertEquals(NaN, pow(ONE, NaN))
+
+        assertEquals(ONE, pow(E.R, ZERO))
+        assertQuasiEquals(E.R, pow(E.R, ONE))
+        assertQuasiEquals(0.54030230586813 + 0.84147098480790.I, pow(E.R, I))
+        assertQuasiEquals(-2.R, pow(E.R, w0))
+        assertQuasiEquals(ONE, pow(E.R, w1))
+        assertQuasiEquals(7.38905609893065.R, pow(E.R, w2))
+        assertEquals(NaN, pow(E.R, INF))
+        assertEquals(NaN, pow(E.R, NaN))
+
         assertQuasiEquals(0.20787957635076193.R, pow(I, I))
         assertQuasiEquals(0.12900959407446697 + 0.03392409290517014.I, pow((1 + 2.I), (3 + 4.I)))
+        assertQuasiEquals(-0.003293803714486435 - 0.031809901650039635.I, pow(w0, w0))
+        assertQuasiEquals(9.918799222181348E-5 + 1.764518526767741E-4.I, pow(w0, w1))
+        assertQuasiEquals(-9.389151387171156 + 4.355172180607202.I, pow(w0, w2))
+
+        for (w in listOf(ZERO, ONE, I, 3.R, w1, w0, INF, NaN)) {
+            assertEquals(NaN, pow(INF, w))
+            assertEquals(NaN, pow(NaN, w))
+        }
     }
 
     @Test
     fun testPowZetaValues() {
         val w = 0.5 + 14.134725141734693790457251983562.I
-        assertQuasiEquals(ONE, pow(1, w))
         assertQuasiEquals(-1.3171414230751064 - 0.5149159850108396.I, pow(2, w))
         assertQuasiEquals(-1.7042590259602113 + 0.30903263975372064.I, pow(3, w))
         assertQuasiEquals(1.4697230567606336 + 1.356434346522595.I, pow(4, w))
